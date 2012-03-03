@@ -1,1 +1,1 @@
-SUBDIRS = lua
+SUBDIRS = lua gb
