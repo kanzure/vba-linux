@@ -10,3 +10,4 @@ autoscan.log
 configure.scan
 *Makefile.in*
 config.h.in
+build/*
