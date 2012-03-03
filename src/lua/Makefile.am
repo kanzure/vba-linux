@@ -1,56 +1,83 @@
 noinst_LIBRARIES = libgblua.a
 
+# libgblua_a_HEADERS = \
+# 	lapi.h  	\
+# 	lauxlib.h	\
+# 	lcode.h 	\
+# 	ldebug.h	\
+# 	ldo.h   	\
+# 	lfunc.h  	\
+# 	lgc.h   	\
+# 	llex.h  	\
+# 	llimit.h	\
+# 	lmem.h   	\
+# 	lobject.h	\
+# 	lopcodes.h	\
+# 	lparser.h	\
+# 	lstate.h	\
+# 	lstring.h	\
+# 	ltable.h	\
+# 	ltm.h   	\
+# 	lua.h   	\
+# 	luaconf.h	\
+# 	lualib.h	\
+# 	lundump.h	\
+# 	lvm.h   	\
+# 	lzio.h  	
+
 libgblua_a_SOURCES = \
-	lapi.c  	\
 	lapi.h  	\
-	lauxlib.c	\
 	lauxlib.h	\
-	lbaselib.c	\
-	lcode.c 	\
 	lcode.h 	\
-	ldblib.c	\
-	ldebug.c	\
 	ldebug.h	\
-	ldo.c   	\
 	ldo.h   	\
-	ldump.c 	\
-	lfunc.c 	\
 	lfunc.h  	\
-	lgc.c   	\
 	lgc.h   	\
-	linit.c  	\
-	liolib.c	\
-	llex.c  	\
 	llex.h  	\
 	llimit.h	\
-	lmathlib.c	\
-	lmem.c          \
 	lmem.h   	\
-	loadlib.c	\
-	lobject.c	\
 	lobject.h	\
-	lopcodes.c	\
 	lopcodes.h	\
-	loslib.c	\
-	lparser.c	\
 	lparser.h	\
-	lstate.c	\
 	lstate.h	\
-	lstring.c	\
 	lstring.h	\
-	lstrlib.c	\
-	ltable.c	\
 	ltable.h	\
-	ltablib.c	\
-	ltm.c   	\
 	ltm.h   	\
 	lua.h   	\
 	luaconf.h	\
 	lualib.h	\
-	lundump.c	\
 	lundump.h	\
-	lvm.c   	\
 	lvm.h   	\
-	lzio.c   	\
 	lzio.h  	\
+			\
+	lapi.c  	\
+	lauxlib.c	\
+	lbaselib.c	\
+	lcode.c 	\
+	ldblib.c	\
+	ldebug.c	\
+	ldo.c   	\
+	ldump.c 	\
+	lfunc.c 	\
+	lgc.c   	\
+	linit.c  	\
+	liolib.c	\
+	llex.c  	\
+	lmathlib.c	\
+	lmem.c          \
+	loadlib.c	\
+	lobject.c	\
+	lopcodes.c	\
+	loslib.c	\
+	lparser.c	\
+	lstate.c	\
+	lstring.c	\
+	lstrlib.c	\
+	ltable.c	\
+	ltablib.c	\
+	ltm.c   	\
+	lundump.c	\
+	lvm.c   	\
+	lzio.c   	\
 	print.c
+
