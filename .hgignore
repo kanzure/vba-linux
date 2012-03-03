@@ -9,3 +9,4 @@ depcomp
 autoscan.log
 configure.scan
 *Makefile.in*
+config.h.in
