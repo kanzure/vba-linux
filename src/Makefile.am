@@ -1,4 +1,6 @@
-CORE_SUBDIRS = gba gb common filters
+SUBDIRS = lua
+
+#CORE_SUBDIRS = gba gb common filters
 
 #EXTRA_SUBDIRS = prof sdl gtk lua
 
