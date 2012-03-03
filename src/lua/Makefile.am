@@ -1,30 +1,5 @@
 noinst_LIBRARIES = libgblua.a
 
-# libgblua_a_HEADERS = \
-# 	lapi.h  	\
-# 	lauxlib.h	\
-# 	lcode.h 	\
-# 	ldebug.h	\
-# 	ldo.h   	\
-# 	lfunc.h  	\
-# 	lgc.h   	\
-# 	llex.h  	\
-# 	llimit.h	\
-# 	lmem.h   	\
-# 	lobject.h	\
-# 	lopcodes.h	\
-# 	lparser.h	\
-# 	lstate.h	\
-# 	lstring.h	\
-# 	ltable.h	\
-# 	ltm.h   	\
-# 	lua.h   	\
-# 	luaconf.h	\
-# 	lualib.h	\
-# 	lundump.h	\
-# 	lvm.h   	\
-# 	lzio.h  	
-
 libgblua_a_SOURCES = \
 	lapi.h 		\
 	lauxlib.h 	\
