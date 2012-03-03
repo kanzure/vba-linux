@@ -5,3 +5,7 @@ aclocal.m4
 autom4te.cache*
 install-sh
 missing
+depcomp
+autoscan.log
+configure.scan
+*Makefile.in*
