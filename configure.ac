@@ -3,7 +3,7 @@ AC_PREREQ([2.68])
 AC_INIT([vba-rlm], [1.0])
 
 dnl TODO: change this to gba.cpp or something
-AC_CONFIG_SRCDIR([src/lua/src/lopcodes.c])
+AC_CONFIG_SRCDIR([src/lua/lopcodes.c])
 AC_CONFIG_HEADERS([config.h])
 AC_PROG_RANLIB
 
