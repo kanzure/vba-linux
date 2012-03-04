@@ -45,4 +45,4 @@ AM_CPPFLAGS = \
 	-DSDL				\
 	-DSYSCONFDIR=\"$(sysconfdir)\"
 
-AM_CXXFLAGS = -fno-exceptions @SDL_CFLAGS@
+AM_CXXFLAGS = -fno-exceptions 

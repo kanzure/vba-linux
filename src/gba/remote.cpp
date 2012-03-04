@@ -121,12 +121,15 @@ bool remoteTcpInit()
 	  fprintf(stderr, "Error listening\n");
 	  exit(-1);
 	}
-      socklen_t len = sizeof(addr);
+
 
 #ifdef WIN32
       int flag = 0;
       ioctlsocket(s, FIONBIO, (unsigned long *)&flag);
 #endif // WIN32
+
+      socklen_t len = sizeof(addr);
+
       int s2 = accept(s, (sockaddr *)&addr, &len);
       if (s2 > 0)
 	{
