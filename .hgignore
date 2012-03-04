@@ -11,3 +11,4 @@ configure.scan
 *Makefile.in*
 config.h.in
 build/*
+build-aux/*

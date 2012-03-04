@@ -1,1 +1,1 @@
-SUBDIRS = lua gb
+SUBDIRS = lua gb gba common
