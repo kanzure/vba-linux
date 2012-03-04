@@ -5,7 +5,6 @@ libgbcom_a_SOURCES = \
 	inputGlobal.h		\
 	memgzio.h		\
 	movie.h			\
-	nesvideos-piece.h	\
 	System.h		\
 	Text.h			\
 	unzip.h			\
@@ -16,7 +15,6 @@ libgbcom_a_SOURCES = \
 	lua-engine.cpp		\
 	memgzio.c		\
 	movie.cpp		\
-	nesvideos-piece.cpp	\
 	Text.cpp		\
 	unzip.cpp		\
 	Util.cpp		
