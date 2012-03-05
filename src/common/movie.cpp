@@ -1180,8 +1180,8 @@ void VBAMovieUpdateState()
       printf("RLM: Movie_STATE_RECORD\n");
       // use first fseek?
       //TODO: THis is the problem.
-      //fwrite(Movie.inputBufferPtr, 1, Movie.bytesPerFrame, Movie.file);
-      printf("RLM: fuck.\n");
+      fwrite(Movie.inputBufferPtr, 1, Movie.bytesPerFrame, Movie.file);
+      printf("RLM: write successful.\n");
       Movie.header.length_frames = Movie.currentFrame;
       Movie.inputBufferPtr	 += Movie.bytesPerFrame;
       Movie.RecordedThisSession = true;
