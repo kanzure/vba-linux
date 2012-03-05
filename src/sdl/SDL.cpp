@@ -1966,6 +1966,7 @@ static char *szFile;
 
 void file_run()
 {
+  printf("RLM: file_run\n");
     utilGetBaseName(szFile, filename);
     char *p = strrchr(filename, '.');
 
@@ -1989,7 +1990,8 @@ void file_run()
       failed = !gbLoadRom(szFile);
       if(!failed) {
         systemCartridgeType = 1;
-        theEmulator = GBSystem;
+        printf("RLM: choosing GBSystem\n");
+	theEmulator = GBSystem;
         if(sdlAutoIPS) {
           int size = gbRomSize;
           utilApplyIPS(ipsname, &gbRom, &size);
@@ -2007,7 +2009,7 @@ void file_run()
         //        if(cpuEnhancedDetection && cpuSaveType == 0) {
         //          utilGBAFindSave(rom, size);
         //        }
-
+	
         sdlApplyPerImagePreferences();
         
         systemCartridgeType = 0;
@@ -2183,7 +2185,7 @@ int main(int argc, char **argv)
       
     case 'r':
       if(optarg == NULL) {
-        fprintf(stderr, "ERROR: --recordMovie ('r') needs movie filename as option\n");
+        fprintf(stderr, "ERROR: --recordmovie ('r') needs movie filename as option\n");
         exit(-1);
       }
         strcpy(movieFileName, optarg);
@@ -2192,7 +2194,7 @@ int main(int argc, char **argv)
     case 'p': // play without read-only (editable)
       fprintf (stderr, "-p got called!\n");
       if(optarg == NULL) {
-        fprintf(stderr, "ERROR: --playMovie ('p') needs movie filename as option\n");
+        fprintf(stderr, "ERROR: --playmovie ('p') needs movie filename as option\n");
         exit(-1);
       }
         strcpy(movieFileName, optarg);
@@ -2201,7 +2203,7 @@ int main(int argc, char **argv)
     case 'w': // play with read-only
      fprintf (stderr, "-w got called!\n"); 
       if(optarg == NULL) {
-        fprintf(stderr, "ERROR: --watchMovie ('w') needs movie filename as option\n");
+        fprintf(stderr, "ERROR: --watchmovie ('w') needs movie filename as option\n");
         exit(-1);
       }
         strcpy(movieFileName, optarg);
@@ -2271,6 +2273,8 @@ int main(int argc, char **argv)
     }
   }
 
+  printf("RLM: derpy loves you!\n");
+  printf("RLM: useMovie: %d (1 is record)\n", useMovie);
   if(sdlPrintUsage) {
     usage(argv[0]);
     exit(-1);
@@ -2317,6 +2321,7 @@ int main(int argc, char **argv)
   {
       szFile = argv[optind];
       file_run();
+      printf("RLM: file_run() done\n");
   }
    else 
   {
@@ -2336,7 +2341,7 @@ int main(int argc, char **argv)
     
     //CPUInit(biosFileName, useBios);
     CPUInit();
-    CPUReset();    
+    CPUReset();
   }
   
   if(debuggerStub) 
@@ -2615,6 +2620,7 @@ int main(int argc, char **argv)
     soundInit();
 
   autoFrameSkipLastTime = throttleLastTime = systemGetClock();
+  printf("RLM: and now for the movie part!\n");
 
   switch(useMovie)
   {
@@ -2635,13 +2641,14 @@ int main(int argc, char **argv)
     	sdlReadBattery();
   	  break;
   }
+  printf("RLM: still alive after movie switch\n");
   SDL_WM_SetCaption("VisualBoyAdvance", NULL);
   
   char *moviefile = getenv("AUTODEMO");
-//  fprintf (stderr, "Checking for AUTODEMO...\n");
+  fprintf (stderr, "Checking for AUTODEMO...\n");
   if (moviefile)
   {
-//    fprintf (stderr, "I got a filename OMG!\nCalling VBAMovieOpen...\n");
+    fprintf (stderr, "I got a filename OMG!\nCalling VBAMovieOpen...\n");
     VBAMovieOpen(moviefile, true);
   }
 
@@ -2650,7 +2657,9 @@ int main(int argc, char **argv)
       if(debugger && theEmulator.emuHasDebugger)
         dbgMain();
       else {
-        theEmulator.emuMain(theEmulator.emuCount);
+	printf("RLM: emulator main\n");
+	theEmulator.emuMain(theEmulator.emuCount);
+	printf("RLM: emulator main called\n");
         if(rewindSaveNeeded && rewindMemory && theEmulator.emuWriteMemState) {
           rewindCount++;
           if(rewindCount > 8)
@@ -3605,14 +3614,17 @@ EmulatedSystemCounters systemCounters = {
 
 void VBAOnEnteringFrameBoundary()
 {
-	CallRegisteredLuaFunctions(LUACALL_AFTEREMULATION);
+  printf("RLM: Entering Frame Boundary\n");
+  CallRegisteredLuaFunctions(LUACALL_AFTEREMULATION);
 
-	if (VBALuaRunning())
-	{
-		VBALuaFrameBoundary();
-	}
+  if (VBALuaRunning())
+  	{
+	  VBALuaFrameBoundary();
+  	}
 
-	VBAMovieUpdateState();
+  printf("RLM: Movie state update pending\n");
+  VBAMovieUpdateState();
+  printf("RLM: Movie state updated\n");
 }
 
 void VBAOnExitingFrameBoundary()

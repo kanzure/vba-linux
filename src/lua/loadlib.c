@@ -424,7 +424,7 @@ static int loader_Croot (lua_State *L) {
   funcname = mkfuncname(L, name);
   if ((stat = ll_loadfunc(L, filename, funcname)) != 0) {
     if (stat != ERRFUNC) loaderror(L, filename);  /* real error */
-    lua_pushfstring(L, "\n\tno module " LUA_QS " in file " LUA_QS,
+        lua_pushfstring(L, "\n\tno module " LUA_QS " in derp " LUA_QS,
                        name, filename);
     return 1;  /* function not found */
   }
