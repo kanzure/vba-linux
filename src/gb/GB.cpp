@@ -3153,7 +3153,7 @@ bool gbUpdateSizes()
 
 void gbEmulate(int ticksToStop)
 {
-  printf("RLM: Inside the GB!\n");
+  //printf("RLM: Inside the GB!\n");
   gbRegister tempRegister;
   u8		   tempValue;
   s8		   offset;
@@ -3164,12 +3164,12 @@ void gbEmulate(int ticksToStop)
   register int opcode = 0;
 
   u32 newmask = 0;
-  printf("RLM: newframe = %d\n", newFrame);
+  //printf("RLM: newframe = %d\n", newFrame);
   if (newFrame)
     {
       extern void VBAOnExitingFrameBoundary();
       VBAOnExitingFrameBoundary();
-      printf("RLM: exiting frame boundary?\n");
+      //printf("RLM: exiting frame boundary?\n");
       // update joystick information
       systemReadJoypads();
 
@@ -3212,9 +3212,9 @@ void gbEmulate(int ticksToStop)
       speedup	   = (extButtons & 1) != 0;
 
       VBAMovieResetIfRequested();
-      printf("RLM: before Lua functions\n");
+      //printf("RLM: before Lua functions\n");
       //CallRegisteredLuaFunctions(LUACALL_BEFOREEMULATION);
-      printf("RLM: after Lua functions\n");
+      //printf("RLM: after Lua functions\n");
       newFrame = false;
     }
 

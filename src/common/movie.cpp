@@ -928,7 +928,7 @@ int VBAMovieCreate(const char *filename, const char *authorInfo, uint8 startFlag
     change_state(MOVIE_STATE_NONE);  // stop current movie when we're able to open the other one
 
   // clear out the current movie
-  printf("RLM: movie init\n");
+  //printf("RLM: movie init\n");
 
   VBAMovieInit();
 
@@ -949,16 +949,16 @@ int VBAMovieCreate(const char *filename, const char *authorInfo, uint8 startFlag
   // set ROM and BIOS checksums and stuff
   VBAMovieGetRomInfo(Movie, Movie.header.romTitle, Movie.header.romGameCode, Movie.header.romOrBiosChecksum, Movie.header.romCRC);
 	
-  printf("RLM: Writing movie header\n");
+  //printf("RLM: Writing movie header\n");
   // write the header to file
   write_movie_header(file, Movie);
 
-  printf("RLM: setting metadata\n");
+  //printf("RLM: setting metadata\n");
 
   // copy over the metadata / author info
   VBAMovieSetMetadata("________________Robert  McIntyre______________________________________________________________________________________________________________________________________________________________________________________________________________________");
 	
-  printf("RLM: writing metadata\n");
+  //printf("RLM: writing metadata\n");
 
   // write the metadata / author info to file
 
@@ -1169,7 +1169,7 @@ void VBAUpdateFrameCountDisplay()
 void VBAMovieUpdateState()
 {
   ++Movie.currentFrame;
-  printf("RLM: inside updateState\n");
+  //printf("RLM: inside updateState\n");
   if (Movie.state == MOVIE_STATE_PLAY)
     {
       Movie.inputBufferPtr += Movie.bytesPerFrame;
@@ -1181,14 +1181,14 @@ void VBAMovieUpdateState()
     }
   else if (Movie.state == MOVIE_STATE_RECORD)
     {
-      printf("RLM: Movie_STATE_RECORD\n");
+      //printf("RLM: Movie_STATE_RECORD\n");
       VBAMovieWrite(0,true);
       // use first fseek?
       //TODO: THis is the problem.
       if (Movie.inputBuffer){
 	fwrite(Movie.inputBufferPtr, 1, Movie.bytesPerFrame, Movie.file);
       }
-      printf("RLM: write successful.\n");
+      //printf("RLM: write successful.\n");
       Movie.header.length_frames = Movie.currentFrame;
       Movie.inputBufferPtr	 += Movie.bytesPerFrame;
       Movie.RecordedThisSession = true;
@@ -1216,9 +1216,12 @@ void VBAMovieRead(int i, bool /*sensor*/)
     {
       currentButtons[i] = 0;        // pretend the controller is disconnected
     }
-
-  if ((currentButtons[i] & BUTTON_MASK_NEW_RESET) != 0)
+  
+  printf("RLM: button %d\n",currentButtons[i]);
+  if ((currentButtons[i] & BUTTON_MASK_NEW_RESET) != 0){
+    printf("RLM: reset signaled\n");
     resetSignaled = true;
+  }
 }
 
 void VBAMovieWrite(int i, bool /*sensor*/)
@@ -1235,7 +1238,7 @@ void VBAMovieWrite(int i, bool /*sensor*/)
     {
       // get the current controller data
       uint16 buttonData = currentButtons[i];
-      printf("RLM: currentButtons %i\n", currentButtons[0]);
+      //printf("RLM: currentButtons %i\n", currentButtons[0]);
 
       // mask away the irrelevent bits
       buttonData &= BUTTON_REGULAR_MASK | BUTTON_MOTION_MASK;
@@ -1669,7 +1672,7 @@ void VBAMovieSetMetadata(const char *info)
 
       fflush(Movie.file);
     }
-  printf("RLM: setMetadata called\n");
+  //printf("RLM: setMetadata called\n");
 
 }
 

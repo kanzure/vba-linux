@@ -1966,8 +1966,8 @@ static char *szFile;
 
 void file_run()
 {
-  printf("RLM: file_run\n");
-    utilGetBaseName(szFile, filename);
+  //printf("RLM: file_run\n");
+  utilGetBaseName(szFile, filename);
     char *p = strrchr(filename, '.');
 
     if(p)
@@ -1990,7 +1990,7 @@ void file_run()
       failed = !gbLoadRom(szFile);
       if(!failed) {
         systemCartridgeType = 1;
-        printf("RLM: choosing GBSystem\n");
+        //printf("RLM: choosing GBSystem\n");
 	theEmulator = GBSystem;
         if(sdlAutoIPS) {
           int size = gbRomSize;
@@ -2273,8 +2273,8 @@ int main(int argc, char **argv)
     }
   }
 
-  printf("RLM: derpy loves you!\n");
-  printf("RLM: useMovie: %d (1 is record)\n", useMovie);
+  //printf("RLM: derpy loves you!\n");
+  //printf("RLM: useMovie: %d (1 is record)\n", useMovie);
   if(sdlPrintUsage) {
     usage(argv[0]);
     exit(-1);
@@ -2321,7 +2321,7 @@ int main(int argc, char **argv)
   {
       szFile = argv[optind];
       file_run();
-      printf("RLM: file_run() done\n");
+      //printf("RLM: file_run() done\n");
   }
    else 
   {
@@ -2620,7 +2620,7 @@ int main(int argc, char **argv)
     soundInit();
 
   autoFrameSkipLastTime = throttleLastTime = systemGetClock();
-  printf("RLM: and now for the movie part!\n");
+  //printf("RLM: and now for the movie part!\n");
 
   switch(useMovie)
   {
@@ -2641,7 +2641,7 @@ int main(int argc, char **argv)
     	sdlReadBattery();
   	  break;
   }
-  printf("RLM: still alive after movie switch\n");
+  //printf("RLM: still alive after movie switch\n");
   SDL_WM_SetCaption("VisualBoyAdvance", NULL);
   
   char *moviefile = getenv("AUTODEMO");
@@ -2657,9 +2657,9 @@ int main(int argc, char **argv)
       if(debugger && theEmulator.emuHasDebugger)
         dbgMain();
       else {
-	printf("RLM: emulator main\n");
+	//printf("RLM: emulator main\n");
 	theEmulator.emuMain(theEmulator.emuCount);
-	printf("RLM: emulator main called\n");
+	//printf("RLM: emulator main called\n");
         if(rewindSaveNeeded && rewindMemory && theEmulator.emuWriteMemState) {
           rewindCount++;
           if(rewindCount > 8)
@@ -3614,7 +3614,7 @@ EmulatedSystemCounters systemCounters = {
 
 void VBAOnEnteringFrameBoundary()
 {
-  printf("RLM: Entering Frame Boundary\n");
+  //printf("RLM: Entering Frame Boundary\n");
   CallRegisteredLuaFunctions(LUACALL_AFTEREMULATION);
 
   if (VBALuaRunning())
@@ -3622,9 +3622,9 @@ void VBAOnEnteringFrameBoundary()
 	  VBALuaFrameBoundary();
   	}
 
-  printf("RLM: Movie state update pending\n");
+  //printf("RLM: Movie state update pending\n");
   VBAMovieUpdateState();
-  printf("RLM: Movie state updated\n");
+  //printf("RLM: Movie state updated\n");
 }
 
 void VBAOnExitingFrameBoundary()
