@@ -7,3 +7,6 @@
 
 
 ./VisualBoyAdvance --recordmovie=./rlm.vbm ../../../pokemon-escape/roms/Pokemon\ Yellow\ \(U\)\ \[C\]\[\!\].gbc                                     
+
+
+./VisualBoyAdvance --recordmovie=/home/r/proj/vba-restore/build/ /home/r/proj/pokemon-escape/roms/Pokemon\ Yellow\ \(U\)\ \[C\]\[\!\].gbc                             
