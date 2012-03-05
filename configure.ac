@@ -60,7 +60,8 @@ AC_CONFIG_FILES([Makefile
                  src/lua/Makefile
 		 src/gb/Makefile
 		 src/gba/Makefile
-		 src/common/Makefile])
+		 src/common/Makefile
+		 src/SFMT/Makefile])
 
 
 
