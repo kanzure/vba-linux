@@ -21,7 +21,16 @@ AC_PROG_MKDIR_P
 AC_PATH_PROG(NASM, nasm)
 
 # Checks for libraries.
+AC_CHECK_LIB(z, gzopen,
+  , AC_MSG_ERROR([*** Cannot compile without zlib.]))
+AC_CHECK_LIB(png, png_create_write_struct,
+  , AC_MSG_ERROR([*** Cannot compile without libpng.]), [-lz])
+
+SDL_VERSION=1.2.2
+AM_PATH_SDL($SDL_VERSION, :,
+            AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!]))
 AC_CHECK_LIB([SDL], [SDL_Init])
+
 AC_CHECK_LIB([pthread], [pthread_create])
 
 
@@ -61,8 +70,13 @@ AC_CONFIG_FILES([Makefile
 		 src/common/Makefile
 		 src/SFMT/Makefile
 		 src/filters/Makefile
+		 src/prof/Makefile
 		 src/sdl/Makefile])
 
+
+
+### RLM: investigate this further
+CXXFLAGS="$CXXFLAGS -DC_CORE"	
 
 
 AC_OUTPUT

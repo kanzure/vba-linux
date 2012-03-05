@@ -22,7 +22,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-
+#include <config.h>
 #include "AutoBuild.h"
 
 #include "Port.h"
@@ -2043,7 +2043,7 @@ void file_run()
 
 int main(int argc, char **argv)
 {
-  fprintf(stderr, "VisualBoyAdvance version %s [SDL]\n", VERSION);
+  fprintf(stderr, "VisualBoyAdvance version %s [SDL]\n", PACKAGE_VERSION);
 
   arg0 = argv[0];
   

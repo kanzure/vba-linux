@@ -1,3 +1,3 @@
-SUBDIRS = SFMT lua gb gba common filters sdl
+SUBDIRS = SFMT lua gb gba common filters prof sdl
 
-noinst_HEADERS = Port.h NLS.h AutoBuild.h
+noinst_HEADERS = Port.h NLS.h AutoBuild.h version.h

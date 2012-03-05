@@ -3,28 +3,37 @@ bin_PROGRAMS = VisualBoyAdvance
 #noinst_PROGRAMS = TestEmu
 
 VisualBoyAdvance_SOURCES = \
-	SDL.cpp			\
-	debugger.cpp		\
-	debugger.h		\
-	expr-lex.cpp		\
-	expr.cpp		\
-	expr.cpp.h		\
-	exprNode.cpp		\
-	exprNode.h		\
-	getopt.c		\
-	getopt.h		\
-	getopt1.c		\
-	../AutoBuild.h		\
-	../NLS.h		\
-	../Port.h
+	Array.h		\
+	debugger.h	\
+	expr.cpp.h	\
+	getopt.h	\
+	RingBuffer.h	\
+	SoundDriver.h	\
+	SoundSDL.h	\
+	Types.h		\
+	exprNode.h	\
+			\
+	debugger.cpp	\
+	expr.cpp	\
+	expr-lex.cpp	\
+	exprNode.cpp	\
+	getopt1.c	\
+	getopt.c	\
+	SDL.cpp		\
+	SoundSDL.cpp	
+
+
+#TestEmu.cpp
+
 
 VisualBoyAdvance_LDADD =   	\
-	../lua/libgblua.a       \
 	../common/libgbcom.a	\
 	../gb/libgb.a		\
 	../gba/libgba.a		\
 	../filters/lib386.a 	\
-	../filters/libfilter.a
+	../filters/libfilter.a	\
+	../prof/libprof.a	\
+	../lua/libgblua.a       
 
 # TestEmu_SOURCES = \
 # 	TestEmu.cpp		\
@@ -48,4 +57,4 @@ AM_CPPFLAGS = \
 	-DSDL				\
 	-DSYSCONFDIR=\"$(sysconfdir)\"
 
-AM_CXXFLAGS = -fno-exceptions
+AM_CXXFLAGS = -fno-exceptions @SDL_CFLAGS@
