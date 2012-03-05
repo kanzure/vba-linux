@@ -18,7 +18,7 @@ AC_PROG_INSTALL
 AC_PROG_RANLIB
 AC_PROG_CPP
 AC_PROG_MKDIR_P
-
+AC_PATH_PROG(NASM, nasm)
 
 # Checks for libraries.
 AC_CHECK_LIB([SDL], [SDL_Init])
@@ -61,7 +61,8 @@ AC_CONFIG_FILES([Makefile
 		 src/gb/Makefile
 		 src/gba/Makefile
 		 src/common/Makefile
-		 src/SFMT/Makefile])
+		 src/SFMT/Makefile
+		 src/filters/Makefile])
 
 
 
