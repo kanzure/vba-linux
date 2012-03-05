@@ -27,7 +27,8 @@ AC_CHECK_LIB([pthread], [pthread_create])
 
 
 # Checks for header files.
-AC_CHECK_HEADERS([arpa/inet.h limits.h locale.h malloc.h netdb.h netinet/in.h stddef.h stdint.h stdlib.h string.h strings.h sys/socket.h unistd.h])
+AC_FUNC_ALLOCA
+AC_CHECK_HEADERS([arpa/inet.h limits.h locale.h malloc.h netdb.h netinet/in.h stddef.h stdint.h stdlib.h string.h strings.h sys/socket.h unistd.h libintl.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
@@ -52,9 +53,6 @@ AC_FUNC_REALLOC
 AC_FUNC_STRCOLL
 AC_CHECK_FUNCS([floor ftruncate gethostbyname gethostname inet_ntoa localeconv memchr memset modf pow setlocale socket sqrt strcasecmp strchr strcspn strdup strerror strpbrk strrchr strstr strtoul])
 
-
-
-
 AC_CONFIG_FILES([Makefile 
 	         src/Makefile
                  src/lua/Makefile
@@ -62,7 +60,8 @@ AC_CONFIG_FILES([Makefile
 		 src/gba/Makefile
 		 src/common/Makefile
 		 src/SFMT/Makefile
-		 src/filters/Makefile])
+		 src/filters/Makefile
+		 src/sdl/Makefile])
 
 
 
