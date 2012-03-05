@@ -54,7 +54,7 @@ using namespace std;
 #endif
 
 extern int emulating; // from system.cpp
-extern u16 currentButtons[4];     // from System.cpp
+extern u16 currentButtons[4];     // from SDL.cpp
 extern u16 lastKeys;
 
 SMovie Movie;
@@ -63,7 +63,7 @@ bool   loadingMovie = false;
 // probably bad idea to have so many global variables, but I hate to recompile almost everything after editing VBA.h
 bool autoConvertMovieWhenPlaying = false;
 
-static u16 initialInputs[4] = { 0 };
+static u16 initialInputs[4] = { 0, 0, 0, 0 };
 
 static bool resetSignaled	  = false;
 static bool resetSignaledLast = false;
@@ -1182,6 +1182,7 @@ void VBAMovieUpdateState()
   else if (Movie.state == MOVIE_STATE_RECORD)
     {
       printf("RLM: Movie_STATE_RECORD\n");
+      VBAMovieWrite(0,true);
       // use first fseek?
       //TODO: THis is the problem.
       if (Movie.inputBuffer){
@@ -1230,10 +1231,11 @@ void VBAMovieWrite(int i, bool /*sensor*/)
 
   reserve_buffer_space((uint32)((Movie.inputBufferPtr - Movie.inputBuffer) + Movie.bytesPerFrame));
 
-  if (Movie.header.controllerFlags & MOVIE_CONTROLLER(i))
+  if (Movie.header.controllerFlags)
     {
       // get the current controller data
       uint16 buttonData = currentButtons[i];
+      printf("RLM: currentButtons %i\n", currentButtons[0]);
 
       // mask away the irrelevent bits
       buttonData &= BUTTON_REGULAR_MASK | BUTTON_MOTION_MASK;
