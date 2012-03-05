@@ -1,3 +1,3 @@
-/home/r/proj/vba-restore/build/artifacts/bin/VisualBAdvance \
+/home/r/proj/vba-restore/build/artifacts/bin/VisualBoyAdvance \
     --playmovie=/home/r/proj/vba-restore/build/movie.vba \
-    /home/r/proj/pokemonscape/roms/yellow.gbc         
+    /home/r/proj/pokemon-escape/roms/yellow.gbc         
