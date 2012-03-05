@@ -365,12 +365,13 @@ static void change_state(MovieState new_state)
       gbEchoRAMFixOn = 1;
 
       gbNullInputHackTempEnabled = gbNullInputHackEnabled;
-
+      
       if (Movie.inputBuffer)
 	{
 	  free(Movie.inputBuffer);
 	  Movie.inputBuffer = NULL;
 	}
+      
     }
   else if (new_state == MOVIE_STATE_PLAY)
     {
@@ -510,6 +511,9 @@ void VBAMovieInit()
 
   resetSignaled	  = false;
   resetSignaledLast = false;
+  
+  // RLM: should probably add inputBuffer initialization here.
+  reserve_buffer_space(90001); 
 }
 
 void VBAMovieGetRomInfo(const SMovie &movieInfo, char romTitle [12], uint32 &romGameCode, uint16 &checksum, uint8 &crc)
@@ -1180,7 +1184,9 @@ void VBAMovieUpdateState()
       printf("RLM: Movie_STATE_RECORD\n");
       // use first fseek?
       //TODO: THis is the problem.
-      fwrite(Movie.inputBufferPtr, 1, Movie.bytesPerFrame, Movie.file);
+      if (Movie.inputBuffer){
+	fwrite(Movie.inputBufferPtr, 1, Movie.bytesPerFrame, Movie.file);
+      }
       printf("RLM: write successful.\n");
       Movie.header.length_frames = Movie.currentFrame;
       Movie.inputBufferPtr	 += Movie.bytesPerFrame;
