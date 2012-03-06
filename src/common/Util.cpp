@@ -284,144 +284,144 @@ bool utilWriteBMPFile(const char *fileName, int w, int h, u8 *pix)
 
 bool utilWritePNGFile(const char *fileName, int w, int h, u8 *pix)
 {
-	u8 writeBuffer[256 * 3];
+  u8 writeBuffer[256 * 3];
 
-	FILE *fp = fopen(fileName, "wb");
+  FILE *fp = fopen(fileName, "wb");
 
-	if (!fp)
-	{
-		systemMessage(MSG_ERROR_CREATING_FILE, N_("Error creating file %s"), fileName);
-		return false;
-	}
+  if (!fp)
+    {
+      systemMessage(MSG_ERROR_CREATING_FILE, N_("Error creating file %s"), fileName);
+      return false;
+    }
 
-	png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
-	                                              NULL,
-	                                              NULL,
-	                                              NULL);
-	if (!png_ptr)
-	{
-		fclose(fp);
-		return false;
-	}
+  png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
+						NULL,
+						NULL,
+						NULL);
+  if (!png_ptr)
+    {
+      fclose(fp);
+      return false;
+    }
 
-	png_infop info_ptr = png_create_info_struct(png_ptr);
+  png_infop info_ptr = png_create_info_struct(png_ptr);
 
-	if (!info_ptr)
-	{
-		png_destroy_write_struct(&png_ptr, NULL);
-		fclose(fp);
-		return false;
-	}
+  if (!info_ptr)
+    {
+      png_destroy_write_struct(&png_ptr, NULL);
+      fclose(fp);
+      return false;
+    }
 
-	if (setjmp(png_ptr->jmpbuf))
-	{
-		png_destroy_write_struct(&png_ptr, NULL);
-		fclose(fp);
-		return false;
-	}
+  if (setjmp(png_jmpbuf(png_ptr)))
+    {
+      png_destroy_write_struct(&png_ptr, NULL);
+      fclose(fp);
+      return false;
+    }
 
-	png_init_io(png_ptr, fp);
+  png_init_io(png_ptr, fp);
 
-	png_set_IHDR(png_ptr,
-	             info_ptr,
-	             w,
-	             h,
-	             8,
-	             PNG_COLOR_TYPE_RGB,
-	             PNG_INTERLACE_NONE,
-	             PNG_COMPRESSION_TYPE_DEFAULT,
-	             PNG_FILTER_TYPE_DEFAULT);
+  png_set_IHDR(png_ptr,
+	       info_ptr,
+	       w,
+	       h,
+	       8,
+	       PNG_COLOR_TYPE_RGB,
+	       PNG_INTERLACE_NONE,
+	       PNG_COMPRESSION_TYPE_DEFAULT,
+	       PNG_FILTER_TYPE_DEFAULT);
 
-	png_write_info(png_ptr, info_ptr);
+  png_write_info(png_ptr, info_ptr);
 
-	u8 *b = writeBuffer;
+  u8 *b = writeBuffer;
 
-	int sizeX = w;
-	int sizeY = h;
+  int sizeX = w;
+  int sizeY = h;
 
-	switch (systemColorDepth)
-	{
-	case 16:
-	{
-		u16 *p = (u16 *)(pix + (w + 2) * 2); // skip first black line
-		for (int y = 0; y < sizeY; y++)
-		{
-			for (int x = 0; x < sizeX; x++)
-			{
-				u16 v = *p++;
+  switch (systemColorDepth)
+    {
+    case 16:
+      {
+	u16 *p = (u16 *)(pix + (w + 2) * 2); // skip first black line
+	for (int y = 0; y < sizeY; y++)
+	  {
+	    for (int x = 0; x < sizeX; x++)
+	      {
+		u16 v = *p++;
 
-				*b++ = ((v >> systemRedShift) & 0x001f) << 3; // R
-				*b++ = ((v >> systemGreenShift) & 0x001f) << 3; // G
-				*b++ = ((v >> systemBlueShift) & 0x01f) << 3; // B
-			}
-			p++; // skip black pixel for filters
-			p++; // skip black pixel for filters
-			png_write_row(png_ptr, writeBuffer);
+		*b++ = ((v >> systemRedShift) & 0x001f) << 3; // R
+		*b++ = ((v >> systemGreenShift) & 0x001f) << 3; // G
+		*b++ = ((v >> systemBlueShift) & 0x01f) << 3; // B
+	      }
+	    p++; // skip black pixel for filters
+	    p++; // skip black pixel for filters
+	    png_write_row(png_ptr, writeBuffer);
 
-			b = writeBuffer;
-		}
-		break;
-	}
-	case 24:
-	{
-		u8 *pixU8 = (u8 *)pix;
-		for (int y = 0; y < sizeY; y++)
-		{
-			for (int x = 0; x < sizeX; x++)
-			{
-				if (systemRedShift < systemBlueShift)
-				{
-					*b++ = *pixU8++; // R
-					*b++ = *pixU8++; // G
-					*b++ = *pixU8++; // B
-				}
-				else
-				{
-					int blue  = *pixU8++;
-					int green = *pixU8++;
-					int red	  = *pixU8++;
+	    b = writeBuffer;
+	  }
+	break;
+      }
+    case 24:
+      {
+	u8 *pixU8 = (u8 *)pix;
+	for (int y = 0; y < sizeY; y++)
+	  {
+	    for (int x = 0; x < sizeX; x++)
+	      {
+		if (systemRedShift < systemBlueShift)
+		  {
+		    *b++ = *pixU8++; // R
+		    *b++ = *pixU8++; // G
+		    *b++ = *pixU8++; // B
+		  }
+		else
+		  {
+		    int blue  = *pixU8++;
+		    int green = *pixU8++;
+		    int red	  = *pixU8++;
 
-					*b++ = red;
-					*b++ = green;
-					*b++ = blue;
-				}
-			}
-			png_write_row(png_ptr, writeBuffer);
+		    *b++ = red;
+		    *b++ = green;
+		    *b++ = blue;
+		  }
+	      }
+	    png_write_row(png_ptr, writeBuffer);
 
-			b = writeBuffer;
-		}
-		break;
-	}
-	case 32:
-	{
-		u32 *pixU32 = (u32 *)(pix + 4 * (w + 1));
-		for (int y = 0; y < sizeY; y++)
-		{
-			for (int x = 0; x < sizeX; x++)
-			{
-				u32 v = *pixU32++;
+	    b = writeBuffer;
+	  }
+	break;
+      }
+    case 32:
+      {
+	u32 *pixU32 = (u32 *)(pix + 4 * (w + 1));
+	for (int y = 0; y < sizeY; y++)
+	  {
+	    for (int x = 0; x < sizeX; x++)
+	      {
+		u32 v = *pixU32++;
 
-				*b++ = ((v >> systemRedShift) & 0x001f) << 3; // R
-				*b++ = ((v >> systemGreenShift) & 0x001f) << 3; // G
-				*b++ = ((v >> systemBlueShift) & 0x001f) << 3; // B
-			}
-			pixU32++;
+		*b++ = ((v >> systemRedShift) & 0x001f) << 3; // R
+		*b++ = ((v >> systemGreenShift) & 0x001f) << 3; // G
+		*b++ = ((v >> systemBlueShift) & 0x001f) << 3; // B
+	      }
+	    pixU32++;
 
-			png_write_row(png_ptr, writeBuffer);
+	    png_write_row(png_ptr, writeBuffer);
 
-			b = writeBuffer;
-		}
-		break;
-	}
-	}
+	    b = writeBuffer;
+	  }
+	break;
+      }
+    }
 
-	png_write_end(png_ptr, info_ptr);
+  png_write_end(png_ptr, info_ptr);
 
-	png_destroy_write_struct(&png_ptr, &info_ptr);
+  png_destroy_write_struct(&png_ptr, &info_ptr);
 
-	fclose(fp);
+  fclose(fp);
 
-	return true;
+  return true;
 }
 
 static int utilReadInt2(FILE *f)
