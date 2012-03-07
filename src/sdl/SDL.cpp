@@ -44,7 +44,7 @@
 #include "common/inputGlobal.h"
 #include "../common/vbalua.h"
 #include "SoundSDL.h"
-
+#include "Drive.h"
 
 #define GBC_CAPABLE ((gbRom[0x143] & 0x80) != 0)
 #define SGB_CAPABLE (gbRom[0x146] == 0x03)
@@ -2704,6 +2704,12 @@ int main(int argc, char **argv)
   SDL_Quit();
   return 0;
 }
+
+// RLM
+int runVBA(int argc, char **argv){
+  return main(argc, argv);
+}
+
 
 void systemMessage(int num, const char *msg, ...)
 {

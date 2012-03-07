@@ -1,7 +1,7 @@
 lib_LTLIBRARIES = libvba.la
 
 libvba_la_SOURCES = \
-	clojure.c
+	clojure.cpp
 
 libvba_la_LIBADD =   	\
 	../common/libgbcom.la		\

@@ -1,4 +1,7 @@
 #include "com_aurellem_gb_Gb.h"
+#include "../sdl/Drive.h"
+
+#include <string.h>
 
 #define UNUSED(x)  (void)(x)
 
@@ -22,5 +25,15 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_sayHello
 JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_startEmulator
 (JNIEnv *env, jclass clazz, jstring str){
   UNUSED(env);UNUSED(clazz);UNUSED(str);
+
+  const char *_romName = env->GetStringUTFChars(str, 0);
+  size_t len = strlen(_romName);
+  
+  char romName[len + 1];
+
+  strcpy(romName, _romName);
+ 
+  char* arguments[] = {"vba-rlm", romName};
+  runVBA(2, arguments);
 }
 
