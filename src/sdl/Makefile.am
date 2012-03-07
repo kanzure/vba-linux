@@ -1,8 +1,8 @@
-lib_LTLIBRARIES = libvba.la
+noinst_LTLIBRARIES = libgui.la
 
 #noinst_PROGRAMS = TestEmu
 
-libvba_la_SOURCES = \
+libgui_la_SOURCES = \
 	Array.h		\
 	debugger.h	\
 	expr.cpp.h	\
@@ -26,15 +26,15 @@ libvba_la_SOURCES = \
 #TestEmu.cpp
 
 
-libvba_la_LIBADD =   	\
-	../common/libgbcom.la		\
-	../gb/libgb.la			\
-	../gba/libgba.la		\
-	../filters/lib386.la 		\
-	../filters/libfilter.la		\
-	../prof/libprof.la		\
-	../clojure/libgbclojure.la	\
-	../lua/libgblua.la       
+# libvba_la_LIBADD =   	\
+# 	../common/libgbcom.la		\
+# 	../gb/libgb.la			\
+# 	../gba/libgba.la		\
+# 	../filters/lib386.la 		\
+# 	../filters/libfilter.la		\
+# 	../prof/libprof.la		\
+# 	../clojure/libgbclojure.la	\
+# 	../lua/libgblua.la       
 
 # TestEmu_SOURCES = \
 # 	TestEmu.cpp		\

@@ -1,4 +1,4 @@
-SUBDIRS = clojure SFMT lua gb gba common filters prof sdl 
+SUBDIRS = SFMT lua gb gba common filters prof sdl clojure
 
 dist_sysconf_DATA = VisualBoyAdvance.cfg
 
