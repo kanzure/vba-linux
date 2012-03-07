@@ -2494,6 +2494,7 @@ bool gbWriteSaveStateToStream(gzFile gzFile)
 
   utilGzWrite(gzFile, &gbMemory[0x8000], 0x8000);
 
+  
   if (gbRamSize && gbRam)
     {
       utilGzWrite(gzFile, gbRam, gbRamSize);
@@ -3858,6 +3859,18 @@ void gbEmulate(int ticksToStop)
 	}
     }
 }
+
+
+
+//RLM: 
+int getRamSize(){
+  return gbRamSize;
+}
+
+int getRomSize(){
+  return gbRomSize;
+}
+
 
 struct EmulatedSystem GBSystem =
   {

@@ -101,6 +101,27 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_loadState
 }
 
 
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getROMSize
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_getROMSize
+(JNIEnv *env, jclass clazz){
+  return getRomSize();
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getRAMSize
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_getRAMSize
+(JNIEnv *env, jclass clazz){
+  return getRamSize();
+}
+
+
 
 
 

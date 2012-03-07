@@ -51,4 +51,15 @@ public class Gb {
 	loadState(saveState, SAVE_SIZE);
     }
 
+    public static native int getROMSize();
+    public static native int getRAMSize();
+    
+
+    public static final int WRAM_SIZE = 0x8000;
+
+    public static final int VRAM_SIZE = 0x4000;
+
+
+
+
 }

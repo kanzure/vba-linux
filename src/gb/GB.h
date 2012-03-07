@@ -44,6 +44,9 @@ extern bool gbWritePNGFile(const char *);
 extern bool gbWriteBMPFile(const char *);
 extern bool gbReadGSASnapshot(const char *);
 
+extern int getRamSize();
+extern int getRomSize();
+
 extern struct EmulatedSystem GBSystem;
 extern struct EmulatedSystemCounters &GBSystemCounters;
 
