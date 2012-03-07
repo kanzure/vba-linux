@@ -1,8 +1,8 @@
-bin_PROGRAMS = VisualBoyAdvance
+lib_LTLIBRARIES = libvba.la
 
 #noinst_PROGRAMS = TestEmu
 
-VisualBoyAdvance_SOURCES = \
+libvba_la_SOURCES = \
 	Array.h		\
 	debugger.h	\
 	expr.cpp.h	\
@@ -26,13 +26,14 @@ VisualBoyAdvance_SOURCES = \
 #TestEmu.cpp
 
 
-VisualBoyAdvance_LDADD =   	\
-	../common/libgbcom.la	\
-	../gb/libgb.la		\
+libvba_la_LIBADD =   	\
+	../common/libgbcom.la		\
+	../gb/libgb.la			\
 	../gba/libgba.la		\
-	../filters/lib386.la 	\
-	../filters/libfilter.la	\
-	../prof/libprof.la	\
+	../filters/lib386.la 		\
+	../filters/libfilter.la		\
+	../prof/libprof.la		\
+	../clojure/libgbclojure.la	\
 	../lua/libgblua.la       
 
 # TestEmu_SOURCES = \

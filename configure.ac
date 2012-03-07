@@ -21,6 +21,7 @@ AC_PROG_MKDIR_P
 AC_PATH_PROG(NASM, nasm)
 AC_PROG_LIBTOOL
 
+
 # Checks for libraries.
 AC_CHECK_LIB(z, gzopen,
   , AC_MSG_ERROR([*** Cannot compile without zlib.]))
@@ -63,9 +64,42 @@ AC_FUNC_REALLOC
 AC_FUNC_STRCOLL
 AC_CHECK_FUNCS([floor ftruncate gethostbyname gethostname inet_ntoa localeconv memchr memset modf pow setlocale socket sqrt strcasecmp strchr strcspn strdup strerror strpbrk strrchr strstr strtoul])
 
+
+
+# find JNI headers
+AC_ARG_VAR([JAVA_INCLUDE_PATH], [The path to the jni.h])
+AC_ARG_VAR([JAVA_INCLUDE_PATH2], [The path to jni_md.h])
+
+
+if test "x$JAVA_INCLUDE_PATH" = "x"; then
+   echo "----------------------------------"	
+   echo "you must have JAVA_INCLUDE_PATH defined."
+   echo "this is the path to jni.h"
+   echo "----------------------------------"
+fi
+
+if test "x$JAVA_INCLUDE_PATH2" = "x"; then
+   echo "----------------------------------"	
+   echo "you must have JAVA_INCLUDE_PATH2 defined."
+   echo "this is the path to jni_md.h"
+   echo "----------------------------------"
+fi
+
+if test "x$JAVA_INCLUDE_PATH" = "x"; then
+   AC_MSG_ERROR([JAVA_INCLUDE_PATH not defined])
+fi
+
+if test "x$JAVA_INCLUDE_PATH2" = "x"; then
+   AC_MSG_ERROR([JAVA_INCLUDE_PATH2 not defined])	
+fi
+
+#AC_SUBST(JAVA_INCLUDE_PATH)
+#AC_SUBST(JAVA_INCLUDE_PATH2)
+
 AC_CONFIG_FILES([Makefile 
 	         src/Makefile
                  src/lua/Makefile
+		 src/clojure/Makefile
 		 src/gb/Makefile
 		 src/gba/Makefile
 		 src/common/Makefile
