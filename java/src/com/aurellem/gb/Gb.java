@@ -35,7 +35,7 @@ public class Gb {
 
     public static native void loadState(ByteBuffer buffer, int size);
 
-    public static final int SAVE_SIZE = 9000;
+    public static final int SAVE_SIZE = 90000;
 
     public static ByteBuffer saveState(){
 	ByteBuffer buf = 
