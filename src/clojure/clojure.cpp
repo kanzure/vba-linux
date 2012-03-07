@@ -1,5 +1,6 @@
 #include "com_aurellem_gb_Gb.h"
 #include "../sdl/Drive.h"
+#include "../gb/GB.h"
 
 #include <string.h>
 
@@ -72,7 +73,34 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_step__I
 JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_shutdown
 (JNIEnv *env, jclass clazz){
   shutdown();
+
 }
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    saveState
+ * Signature: (Ljava/nio/ByteBuffer;)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_saveState
+(JNIEnv *env, jclass clazz, jobject buffer, jint size){
+  char* buffer_address = 
+    ((char*) env->GetDirectBufferAddress(buffer));
+  gbWriteMemSaveState(buffer_address, size);
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    loadState
+ * Signature: (Ljava/nio/ByteBuffer;)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_loadState
+(JNIEnv *env, jclass clazz, jobject buffer, jint size){
+  char* buffer_address = 
+    ((char*) env->GetDirectBufferAddress(buffer));
+  gbReadMemSaveState(buffer_address, size);
+}
+
+
 
 
 
