@@ -12,3 +12,6 @@ configure.scan
 config.h.in
 build/*
 build-aux/*
+java/dist/*
+java/headers/*
+java//ant-targets-build.xml
