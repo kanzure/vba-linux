@@ -19,6 +19,7 @@ AC_PROG_RANLIB
 AC_PROG_CPP
 AC_PROG_MKDIR_P
 AC_PATH_PROG(NASM, nasm)
+AC_PROG_LIBTOOL
 
 # Checks for libraries.
 AC_CHECK_LIB(z, gzopen,

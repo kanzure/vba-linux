@@ -1,13 +1,13 @@
 SUFFIXES = .asm
 
-noinst_LIBRARIES = lib386.a libfilter.a
+noinst_LTLIBRARIES = lib386.la libfilter.la
 
-lib386_a_SOURCES = 2xSaImmx.asm
+lib386_la_SOURCES = 2xSaImmx.asm
 
 .asm.o:
 	$(NASM) -f elf -o $@ $<
 
-libfilter_a_SOURCES = \
+libfilter_la_SOURCES = \
 	2xSaI.cpp		\
 	admame.cpp		\
 	bilinear.cpp		\

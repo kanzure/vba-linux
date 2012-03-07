@@ -1,6 +1,6 @@
-noinst_LIBRARIES = libgblua.a
+noinst_LTLIBRARIES = libgblua.la
 
-libgblua_a_SOURCES = \
+libgblua_la_SOURCES = \
 	lapi.h 		\
 	lauxlib.h 	\
 	lcode.h 	\

@@ -27,13 +27,13 @@ VisualBoyAdvance_SOURCES = \
 
 
 VisualBoyAdvance_LDADD =   	\
-	../common/libgbcom.a	\
-	../gb/libgb.a		\
-	../gba/libgba.a		\
-	../filters/lib386.a 	\
-	../filters/libfilter.a	\
-	../prof/libprof.a	\
-	../lua/libgblua.a       
+	../common/libgbcom.la	\
+	../gb/libgb.la		\
+	../gba/libgba.la		\
+	../filters/lib386.la 	\
+	../filters/libfilter.la	\
+	../prof/libprof.la	\
+	../lua/libgblua.la       
 
 # TestEmu_SOURCES = \
 # 	TestEmu.cpp		\

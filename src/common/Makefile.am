@@ -1,6 +1,6 @@
-noinst_LIBRARIES = libgbcom.a
+noinst_LTLIBRARIES = libgbcom.la
 
-libgbcom_a_SOURCES = \
+libgbcom_la_SOURCES = \
 	CheatSearch.h		\
 	inputGlobal.h		\
 	memgzio.h		\

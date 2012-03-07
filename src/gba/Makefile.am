@@ -1,6 +1,6 @@
-noinst_LIBRARIES = libgba.a
+noinst_LTLIBRARIES = libgba.la
 
-libgba_a_SOURCES = \
+libgba_la_SOURCES = \
 	agbprint.h	\
 	armdis.h	\
 	arm-new.h	\

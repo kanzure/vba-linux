@@ -1,6 +1,6 @@
-noinst_LIBRARIES = libprof.a
+noinst_LTLIBRARIES = libprof.la
 
-libprof_a_SOURCES = \
+libprof_la_SOURCES = \
 	gmon.h		\
 	gmon_out.h	\
 	prof.cpp	\
