@@ -37,15 +37,32 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_startEmulator
   runVBA(2, arguments);
 }
 
+
+
+
 /*
  * Class:     com_aurellem_gb_Gb
  * Method:    step
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_step
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_step__
 (JNIEnv *env, jclass clazz){
   step();
 }
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    step
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_step__I
+(JNIEnv *env, jclass clazz, jint keymask){
+  step(keymask);
+}
+
+
+
+
 
 /*
  * Class:     com_aurellem_gb_Gb
@@ -56,5 +73,8 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_shutdown
 (JNIEnv *env, jclass clazz){
   shutdown();
 }
+
+
+
 
 

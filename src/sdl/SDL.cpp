@@ -2090,12 +2090,16 @@ void step () {
     SDL_Delay(500);
   }
   sdlPollEvents();
-  if(mouseCounter) {
-    mouseCounter--;
-    if(mouseCounter == 0)
-      SDL_ShowCursor(SDL_DISABLE);
-  }
+  SDL_ShowCursor(SDL_DISABLE);
 }
+
+void step(int keymask){
+  currentButtons[0] = keymask;
+  step();
+  currentButtons[0] = keymask;
+}
+
+
 
 int main(int argc, char **argv)
 {

@@ -28,6 +28,8 @@ public class Gb {
 
     public static native void step();
 
+    public static native void step(int keymask);
+
     public static native void shutdown();
 
 }
