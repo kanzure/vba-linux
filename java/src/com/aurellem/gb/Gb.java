@@ -12,12 +12,17 @@ public class Gb {
     /** 
      * Hello World! This is just to test the native interface.
      */
-    public native void sayHello();
+    public static native void sayHello();
     
     /** 
      * Run the emulator on a given rom
      * @param rom - the name of the rom.
      */
-    public native void startEmulator(String rom);
+    public static native void startEmulator(String rom);
+
+    
+    public static void loadVBA(){
+	System.loadLibrary("vba");
+    }
 
 }

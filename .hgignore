@@ -14,4 +14,4 @@ build/*
 build-aux/*
 java/dist/*
 java/headers/*
-java/ant-targets-build.xml
+java/.ant-targets-build.xml
