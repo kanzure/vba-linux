@@ -37,3 +37,24 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_startEmulator
   runVBA(2, arguments);
 }
 
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    step
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_step
+(JNIEnv *env, jclass clazz){
+  step();
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    shutdown
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_shutdown
+(JNIEnv *env, jclass clazz){
+  shutdown();
+}
+
+

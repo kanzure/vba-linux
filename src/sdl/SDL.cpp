@@ -2043,6 +2043,60 @@ void file_run()
   renderedFrames = 0;
   }
 
+
+void shutdown () {
+fprintf(stderr,"Shutting down\n");
+  remoteCleanUp();
+  soundShutdown();
+
+  if(gbRom != NULL || rom != NULL) {
+    sdlWriteBattery();
+    theEmulator.emuCleanUp();
+  }
+
+  if(delta) {
+    free(delta);
+    delta = NULL;
+  }
+  
+  SDL_Quit();
+}
+
+
+void step () {
+  if(!paused && active) {
+    if(debugger && theEmulator.emuHasDebugger)
+      dbgMain();
+    else {
+      //printf("RLM: emulator main\n");
+      theEmulator.emuMain(theEmulator.emuCount);
+      //printf("RLM: emulator main called\n");
+      if(rewindSaveNeeded && rewindMemory && theEmulator.emuWriteMemState) {
+	rewindCount++;
+	if(rewindCount > 8)
+	  rewindCount = 8;
+	if(theEmulator.emuWriteMemState &&
+	   theEmulator.emuWriteMemState(&rewindMemory[rewindPos*REWIND_SIZE], 
+					REWIND_SIZE)) {
+	  rewindPos = ++rewindPos & 7;
+	  if(rewindCount == 8)
+	    rewindTopPos = ++rewindTopPos & 7;
+	}
+      }
+
+      rewindSaveNeeded = false;
+    }
+  } else {
+    SDL_Delay(500);
+  }
+  sdlPollEvents();
+  if(mouseCounter) {
+    mouseCounter--;
+    if(mouseCounter == 0)
+      SDL_ShowCursor(SDL_DISABLE);
+  }
+}
+
 int main(int argc, char **argv)
 {
   fprintf(stderr, "VisualBoyAdvance version %s [SDL]\n", PACKAGE_VERSION);
@@ -2651,57 +2705,7 @@ int main(int argc, char **argv)
     fprintf (stderr, "I got a filename OMG!\nCalling VBAMovieOpen...\n");
     VBAMovieOpen(moviefile, true);
   }
-
-  while(emulating) {
-    if(!paused && active) {
-      if(debugger && theEmulator.emuHasDebugger)
-        dbgMain();
-      else {
-	//printf("RLM: emulator main\n");
-	theEmulator.emuMain(theEmulator.emuCount);
-	//printf("RLM: emulator main called\n");
-        if(rewindSaveNeeded && rewindMemory && theEmulator.emuWriteMemState) {
-          rewindCount++;
-          if(rewindCount > 8)
-            rewindCount = 8;
-          if(theEmulator.emuWriteMemState &&
-             theEmulator.emuWriteMemState(&rewindMemory[rewindPos*REWIND_SIZE], 
-                                       REWIND_SIZE)) {
-            rewindPos = ++rewindPos & 7;
-            if(rewindCount == 8)
-              rewindTopPos = ++rewindTopPos & 7;
-          }
-        }
-
-        rewindSaveNeeded = false;
-      }
-    } else {
-      SDL_Delay(500);
-    }
-    sdlPollEvents();
-    if(mouseCounter) {
-      mouseCounter--;
-      if(mouseCounter == 0)
-        SDL_ShowCursor(SDL_DISABLE);
-    }
-  }
-  
-  emulating = 0;
-  fprintf(stderr,"Shutting down\n");
-  remoteCleanUp();
-  soundShutdown();
-
-  if(gbRom != NULL || rom != NULL) {
-    sdlWriteBattery();
-    theEmulator.emuCleanUp();
-  }
-
-  if(delta) {
-    free(delta);
-    delta = NULL;
-  }
-  
-  SDL_Quit();
+  step();
   return 0;
 }
 
@@ -2709,6 +2713,11 @@ int main(int argc, char **argv)
 int runVBA(int argc, char **argv){
   return main(argc, argv);
 }
+
+
+
+
+
 
 
 void systemMessage(int num, const char *msg, ...)
