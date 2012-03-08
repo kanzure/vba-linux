@@ -123,7 +123,17 @@ JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_getRAMSize
 
 
 
-
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getRAM
+ * Signature: ([I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getRAM
+(JNIEnv *env, jclass clazz, jintArray arr){
+  jint *ram_store = env->GetIntArrayElements(arr, 0);
+  storeRam(ram_store);
+  env->ReleaseIntArrayElements(arr, ram_store, 0);
+}
 
 
 

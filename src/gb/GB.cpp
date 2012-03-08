@@ -3871,6 +3871,15 @@ int getRomSize(){
   return gbRomSize;
 }
 
+void storeRam(int32* store){
+  int i;
+  for (i = 0; i < gbRamSize; i++){
+    store[i] = (int32) gbRam[i];
+  }
+}
+
+
+
 
 struct EmulatedSystem GBSystem =
   {

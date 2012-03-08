@@ -46,6 +46,7 @@ extern bool gbReadGSASnapshot(const char *);
 
 extern int getRamSize();
 extern int getRomSize();
+extern void storeRam(int32 *);
 
 extern struct EmulatedSystem GBSystem;
 extern struct EmulatedSystemCounters &GBSystemCounters;
