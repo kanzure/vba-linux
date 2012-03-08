@@ -2714,7 +2714,7 @@ int main(int argc, char **argv)
     fprintf (stderr, "I got a filename OMG!\nCalling VBAMovieOpen...\n");
     VBAMovieOpen(moviefile, true);
   }
-  step();
+  //step();
   return 0;
 }
 
