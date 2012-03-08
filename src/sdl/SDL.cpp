@@ -2095,7 +2095,12 @@ void step () {
 
 void step(int keymask){
   currentButtons[0] = keymask;
-  step();
+  if (keymask == 0x0800){
+    theEmulator.emuReset(true);
+  }
+  else {
+    step();
+  }
   currentButtons[0] = keymask;
 }
 
