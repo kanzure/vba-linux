@@ -173,4 +173,16 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getVRAM
 }
 
 
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getRegisters
+ * Signature: ([I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getRegisters
+(JNIEnv *env, jclass clazz, jintArray arr){
+  jint *registers_store = env->GetIntArrayElements(arr, 0);
+  storeRegisters(registers_store);
+  env->ReleaseIntArrayElements(arr, registers_store, 0);
+}
+
 

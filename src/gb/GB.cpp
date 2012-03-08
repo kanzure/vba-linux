@@ -3899,9 +3899,36 @@ void storeVRam(int32* store){
   }
 }
 
-
-
-
+void storeRegisters(int32* store){
+  store[0] = (int32) PC.W;
+  store[1] = (int32) SP.W;
+  store[2] = (int32) AF.W;
+  store[3] = (int32) BC.W;
+  store[4] = (int32) DE.W;
+  store[5] = (int32) HL.W;
+  store[6] = (int32) register_DIV;
+  store[7] = (int32) register_TIMA;
+  store[8] = (int32) register_TMA;
+  store[9] = (int32) register_TAC;
+  store[10] = (int32) register_IF;
+  store[11] = (int32) register_LCDC;
+  store[12] = (int32) register_STAT;
+  store[13] = (int32) register_SCY;
+  store[14] = (int32) register_SCX;
+  store[15] = (int32) register_LY;
+  store[16] = (int32) register_LYC;
+  store[17] = (int32) register_DMA;
+  store[18] = (int32) register_WY;
+  store[19] = (int32) register_WX;
+  store[20] = (int32) register_VBK;
+  store[21] = (int32) register_HDMA1;
+  store[22] = (int32) register_HDMA2;
+  store[23] = (int32) register_HDMA3;
+  store[24] = (int32) register_HDMA4;
+  store[25] = (int32) register_HDMA5;
+  store[26] = (int32) register_SVBK;
+  store[27] = (int32) register_IE;
+}
 
 struct EmulatedSystem GBSystem =
   {
