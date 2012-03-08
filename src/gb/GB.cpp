@@ -3878,6 +3878,28 @@ void storeRam(int32* store){
   }
 }
 
+void storeRom(int32* store){
+  int i;
+  for (i = 0; i < gbRomSize; i++){
+    store[i] = (int32) gbRom[i];
+  }
+}
+
+void storeWRam(int32* store){
+  int i;
+  for (i = 0; i < 0x8000; i++){
+    store[i] = (int32) gbWram[i];
+  }
+}
+
+void storeVRam(int32* store){
+  int i;
+  for (i = 0; i < 0x4000; i++){
+    store[i] = (int32) gbVram[i];
+  }
+}
+
+
 
 
 

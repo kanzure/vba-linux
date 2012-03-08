@@ -121,8 +121,6 @@ JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_getRAMSize
   return getRamSize();
 }
 
-
-
 /*
  * Class:     com_aurellem_gb_Gb
  * Method:    getRAM
@@ -132,6 +130,45 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getRAM
 (JNIEnv *env, jclass clazz, jintArray arr){
   jint *ram_store = env->GetIntArrayElements(arr, 0);
   storeRam(ram_store);
+  env->ReleaseIntArrayElements(arr, ram_store, 0);
+}
+
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getROM
+ * Signature: ([I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getROM
+(JNIEnv *env, jclass clazz, jintArray arr){
+  jint *ram_store = env->GetIntArrayElements(arr, 0);
+  storeRom(ram_store);
+  env->ReleaseIntArrayElements(arr, ram_store, 0);
+}
+
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getWRAM
+ * Signature: ([I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getWRAM
+(JNIEnv *env, jclass clazz, jintArray arr){
+  jint *ram_store = env->GetIntArrayElements(arr, 0);
+  storeWRam(ram_store);
+  env->ReleaseIntArrayElements(arr, ram_store, 0);
+}
+
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getVRAM
+ * Signature: ([I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getVRAM
+(JNIEnv *env, jclass clazz, jintArray arr){
+  jint *ram_store = env->GetIntArrayElements(arr, 0);
+  storeVRam(ram_store);
   env->ReleaseIntArrayElements(arr, ram_store, 0);
 }
 
