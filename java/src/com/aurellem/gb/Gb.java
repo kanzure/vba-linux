@@ -36,7 +36,7 @@ public class Gb {
 
     public static native void loadState(ByteBuffer buffer, int size);
 
-    public static final int MAX_SAVE_SIZE = 90000;
+    public static final int MAX_SAVE_SIZE = 20000;
 
     public static ByteBuffer createDirectByteBuffer(int capacity){
 	byte[] zeros = new byte[capacity];
