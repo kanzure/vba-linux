@@ -79,13 +79,14 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_shutdown
 /*
  * Class:     com_aurellem_gb_Gb
  * Method:    saveState
- * Signature: (Ljava/nio/ByteBuffer;)V
+ * Signature: (Ljava/nio/ByteBuffer;I)J
  */
-JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_saveState
+JNIEXPORT jlong JNICALL Java_com_aurellem_gb_Gb_saveState
 (JNIEnv *env, jclass clazz, jobject buffer, jint size){
   char* buffer_address = 
     ((char*) env->GetDirectBufferAddress(buffer));
-  gbWriteMemSaveState(buffer_address, size);
+  long limit = gbWriteMemSaveStatePos(buffer_address, size);
+  return limit;
 }
 
 /*

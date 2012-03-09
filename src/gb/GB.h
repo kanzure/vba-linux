@@ -51,6 +51,7 @@ extern void storeRom(int32 *);
 extern void storeWRam(int32 *);
 extern void storeVRam(int32 *);
 extern void storeRegisters(int32 *);
+extern long gbWriteMemSaveStatePos(char *, int);
 
 extern struct EmulatedSystem GBSystem;
 extern struct EmulatedSystemCounters &GBSystemCounters;

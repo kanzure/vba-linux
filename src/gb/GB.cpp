@@ -2463,14 +2463,16 @@ variable_desc gbSaveGameStruct[] =
 
 bool gbWriteSaveStateToStream(gzFile gzFile)
 {
+  
   utilWriteInt(gzFile, GBSAVE_GAME_VERSION);
 
+  
   utilGzWrite(gzFile, &gbRom[0x134], 15);
 
   utilWriteData(gzFile, gbSaveGameStruct);
-
+  
   utilGzWrite(gzFile, &IFF, 2);
-
+  
   if (gbSgbMode)
     {
       gbSgbSaveGame(gzFile);
@@ -2549,11 +2551,12 @@ bool gbWriteSaveStateToStream(gzFile gzFile)
     utilGzWrite(gzFile, &GBSystemCounters.laggedLast, sizeof(GBSystemCounters.laggedLast));
   }
 
+  utilWriteInt(gzFile, 0x07); // RLM this is the end of file marker.
   return true;
 }
 
-bool gbWriteMemSaveState(char *memory, int available)
-{
+
+long gbWriteMemSaveStatePos(char *memory, int available){
   gzFile gzFile = utilMemGzOpen(memory, available, "w");
 
   if (gzFile == NULL)
@@ -2565,12 +2568,21 @@ bool gbWriteMemSaveState(char *memory, int available)
 
   long pos = utilGzTell(gzFile) + 8;
 
-  if (pos >= (available))
-    res = false;
+  if (pos >= available){
+    pos = 0;
+  }
 
   utilGzClose(gzFile);
 
-  return res;
+  return pos;
+
+}
+
+bool gbWriteMemSaveState(char *memory, int available)
+{
+  long pos = gbWriteMemSaveStatePos(memory, available);
+  if (pos > 0) { return true; }
+  else{ return false; }
 }
 
 bool gbWriteSaveState(const char *name)

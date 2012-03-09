@@ -32,24 +32,49 @@ public class Gb {
 
     public static native void shutdown();
 
-    public static native void saveState(ByteBuffer buffer, int size);
+    public static native long saveState(ByteBuffer buffer, int size);
 
     public static native void loadState(ByteBuffer buffer, int size);
 
-    public static final int SAVE_SIZE = 90000;
+    public static final int MAX_SAVE_SIZE = 90000;
 
-    public static ByteBuffer saveState(){
+    public static ByteBuffer createDirectByteBuffer(int capacity){
+	byte[] zeros = new byte[capacity];
 	ByteBuffer buf = 
-	    ByteBuffer.allocateDirect(SAVE_SIZE)
+	    ByteBuffer.allocateDirect(capacity)
 	              .order(ByteOrder.nativeOrder());
+	buf.put(zeros);
 	buf.clear();
-	saveState(buf, SAVE_SIZE);
-	buf.flip();
 	return buf;
     }
 
+    public static ByteBuffer saveBuffer(){
+	return createDirectByteBuffer(MAX_SAVE_SIZE);
+    }
+
+    public static ByteBuffer saveState(){
+	ByteBuffer buf = saveBuffer();
+	
+	saveState(buf, buf.capacity());
+	
+	// determine the extent of the saved data
+	int position = buf.capacity() - 1;
+	for (int i = position; i > 0; i--){
+	    if (0 != buf.get(i)){
+		position = i;
+		break;
+	    }}
+	System.out.println("Position: " + position);
+	byte[] saveArray = new byte[position];
+	ByteBuffer save = createDirectByteBuffer(position);
+	buf.get(saveArray, 0 , position);
+	save.put(saveArray);
+	save.rewind();
+	return save;
+    }
+
     public static void loadState(ByteBuffer saveState){
-	loadState(saveState, SAVE_SIZE);
+	loadState(saveState, MAX_SAVE_SIZE);
     }
 
     public static native int getROMSize();
