@@ -64,7 +64,6 @@ public class Gb {
 		position = i;
 		break;
 	    }}
-	System.out.println("Position: " + position);
 	byte[] saveArray = new byte[position];
 	ByteBuffer save = createDirectByteBuffer(position);
 	buf.get(saveArray, 0 , position);
