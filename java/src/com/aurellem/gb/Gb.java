@@ -28,7 +28,11 @@ public class Gb {
 
     public static native void step();
 
-    public static native void step(int keymask);
+    public static native void nstep(int keymask);
+
+    public static void step(int keymask){
+	if (-1 == keymask) {step();}
+	else {nstep(keymask);}}
 
     public static native void shutdown();
 

@@ -46,7 +46,7 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_startEmulator
  * Method:    step
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_step__
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_step
 (JNIEnv *env, jclass clazz){
   step();
 }
@@ -56,7 +56,7 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_step__
  * Method:    step
  * Signature: (I)V
  */
-JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_step__I
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_nstep
 (JNIEnv *env, jclass clazz, jint keymask){
   step(keymask);
 }
