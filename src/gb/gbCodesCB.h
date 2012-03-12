@@ -1266,4 +1266,4 @@
    systemMessage(0, N_("Unknown opcode %02x at %04x"),
                  gbReadOpcode(PC.W-1),PC.W-1);
    emulating = false;
-   return;
+   return 1;

@@ -27,6 +27,12 @@ public class Gb {
     }
 
     public static native void step();
+    
+    public static native int ntick();
+
+    public static boolean tick(){
+	return (1 == ntick());
+    }
 
     public static native void nstep(int keymask);
 

@@ -15,7 +15,7 @@
 #include "../common/Util.h"
 #include "../common/System.h"
 #include "../common/movie.h"
-#include "../common/vbalua.h"
+// #include "../common/vbalua.h"
 
 #ifdef __GNUC__
 #define _stricmp strcasecmp
@@ -1280,7 +1280,7 @@ u8 gbReadOpcode(register u16 address)
 void gbWriteMemory(register u16 address, register u8 value)
 {
   gbWriteMemoryWrapped(address, value);
-  CallRegisteredLuaMemHook(address, 1, value, LUAMEMHOOK_WRITE);
+  //CallRegisteredLuaMemHook(address, 1, value, LUAMEMHOOK_WRITE);
 }
 
 u8 gbReadMemory(register u16 address)
@@ -3164,8 +3164,9 @@ bool gbUpdateSizes()
   return true;
 }
 
-void gbEmulate(int ticksToStop)
+int gbEmulate(int ticksToStop)
 {
+  int rlm_count = 0;
   //printf("RLM: Inside the GB!\n");
   gbRegister tempRegister;
   u8		   tempValue;
@@ -3232,8 +3233,8 @@ void gbEmulate(int ticksToStop)
     }
 
 
-  for (;; )
-    {
+  //for (;; )
+  // {
 #ifndef FINAL_VERSION
       if (systemDebug)
 	{
@@ -3276,7 +3277,8 @@ void gbEmulate(int ticksToStop)
       else
 	{
 	  opcode = gbReadOpcode(PC.W);
-	  CallRegisteredLuaMemHook(PC.W, 1, opcode, LUAMEMHOOK_EXEC);
+	  //printf("RLM: calling mem Hook ; %07d\n", rlm_count++);
+	  //CallRegisteredLuaMemHook(PC.W, 1, opcode, LUAMEMHOOK_EXEC);
 	  PC.W++;
 
 	  if (IFF & 0x100)
@@ -3304,7 +3306,7 @@ void gbEmulate(int ticksToStop)
 	}
 
       if (!emulating)
-	return;
+	return 1;
 
       if (gbDmaTicks)
 	{
@@ -3774,31 +3776,31 @@ void gbEmulate(int ticksToStop)
 		  if ((gbInterrupt & 1) && (register_IE & 1))
 		    {
 		      gbVblank_interrupt();
-		      continue;
+		      return newFrame;
 		    }
 
 		  if ((gbInterrupt & 2) && (register_IE & 2))
 		    {
 		      gbLcd_interrupt();
-		      continue;
+		      return newFrame;
 		    }
 
 		  if ((gbInterrupt & 4) && (register_IE & 4))
 		    {
 		      gbTimer_interrupt();
-		      continue;
+		      return newFrame;
 		    }
 
 		  if ((gbInterrupt & 8) && (register_IE & 8))
 		    {
 		      gbSerial_interrupt();
-		      continue;
+		      return newFrame;
 		    }
 
 		  if ((gbInterrupt & 16) && (register_IE & 16))
 		    {
 		      gbJoypad_interrupt();
-		      continue;
+		      return newFrame;
 		    }
 		}
 	    }
@@ -3814,12 +3816,12 @@ void gbEmulate(int ticksToStop)
 	{
 	  // old timing code
 	  if (ticksToStop > 0)
-	    continue;
+	    return newFrame;
 	}
       else
 	{
 	  if (!newFrame && (register_LCDC & 0x80) != 0)
-	    continue;
+	    return newFrame;
 	}
 
       if (!(register_LCDC & 0x80))
@@ -3862,14 +3864,15 @@ void gbEmulate(int ticksToStop)
 	}
 
       // makes sure frames are really divided across input sampling boundaries which occur at a constant rate
-      if (newFrame || useOldFrameTiming)
-	{
+      //if (newFrame || useOldFrameTiming)
+      //	{
 	  ///			extern void VBAOnEnteringFrameBoundary();
 	  ///			VBAOnEnteringFrameBoundary();
 
-	  break;
-	}
-    }
+      //  break;
+      //	}
+      // RLM removing for loop }
+  return newFrame;
 }
 
 
@@ -3964,7 +3967,7 @@ struct EmulatedSystem GBSystem =
     gbWriteSaveState,
     // emuReadStateFromStream
     gbReadSaveStateFromStream,
-    // emuWriteStateToStream
+    // emuwritestatetostream
     gbWriteSaveStateToStream,
     // emuReadMemState
     gbReadMemSaveState,

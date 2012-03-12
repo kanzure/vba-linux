@@ -22,7 +22,7 @@ typedef union
 } gbRegister;
 
 extern bool gbLoadRom(const char *);
-extern void gbEmulate(int);
+extern int gbEmulate(int);
 extern bool gbIsGameboyRom(const char *);
 extern void gbSoundReset();
 extern void gbSoundSetQuality(int);

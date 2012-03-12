@@ -13,7 +13,7 @@
 struct EmulatedSystem
 {
 	// main emulation function
-	void (*emuMain)(int);
+	int (*emuMain)(int);
 	// reset emulator
 	void (*emuReset)(bool);
 	// clean up memory

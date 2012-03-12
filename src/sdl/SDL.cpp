@@ -2062,30 +2062,18 @@ fprintf(stderr,"Shutting down\n");
   SDL_Quit();
 }
 
+int tick () {
+  return theEmulator.emuMain(theEmulator.emuCount);
+}
 
 void step () {
   if(!paused && active) {
-    if(debugger && theEmulator.emuHasDebugger)
-      dbgMain();
-    else {
-      //printf("RLM: emulator main\n");
-      theEmulator.emuMain(theEmulator.emuCount);
-      //printf("RLM: emulator main called\n");
-      if(rewindSaveNeeded && rewindMemory && theEmulator.emuWriteMemState) {
-	rewindCount++;
-	if(rewindCount > 8)
-	  rewindCount = 8;
-	if(theEmulator.emuWriteMemState &&
-	   theEmulator.emuWriteMemState(&rewindMemory[rewindPos*REWIND_SIZE], 
-					REWIND_SIZE)) {
-	  rewindPos = ++rewindPos & 7;
-	  if(rewindCount == 8)
-	    rewindTopPos = ++rewindTopPos & 7;
-	}
-      }
-
-      rewindSaveNeeded = false;
+    //printf("RLM: emulator main\n");
+    int frameComplete = 0;
+    while (!(frameComplete)){
+      frameComplete = theEmulator.emuMain(theEmulator.emuCount);
     }
+    //printf("RLM: emulator main called\n");
   } else {
     SDL_Delay(500);
   }

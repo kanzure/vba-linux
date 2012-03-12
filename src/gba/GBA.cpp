@@ -3746,7 +3746,7 @@ void log(const char *defaultMsg, ...)
 extern void winlog(const char *, ...);
 #endif
 
-void CPULoop(int _ticks)
+void CPULoop2(int _ticks)
 {
 	int32 ticks = _ticks;
 	int32 clockTicks;
@@ -4500,6 +4500,14 @@ updateLoop:
 		}
 	}
 }
+
+
+// RLM: 
+int CPULoop(int _ticks){
+  CPULoop2(_ticks);
+  return 1;
+}
+
 
 struct EmulatedSystem GBASystem =
 {

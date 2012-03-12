@@ -61,8 +61,16 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_nstep
   step(keymask);
 }
 
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    ntick
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_ntick
+(JNIEnv *env, jclass clazz){
+  return tick();
 
-
+}
 
 
 /*

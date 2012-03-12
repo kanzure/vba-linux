@@ -86,7 +86,7 @@ extern void CPUWriteByte(u32, u8);
 extern bool CPULoadBios(const char *, bool);
 extern void CPUInit();
 extern void CPUReset(bool userReset = false);
-extern void CPULoop(int);
+extern int CPULoop(int);
 extern void CPUCheckDMA(int, int);
 #ifdef PROFILING
 extern void cpuProfil(char *buffer, int, u32, int);

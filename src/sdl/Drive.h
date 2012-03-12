@@ -5,3 +5,5 @@ void step();
 void step(int keymask);
 
 void shutdown();
+
+int tick();
