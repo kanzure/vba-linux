@@ -46,7 +46,7 @@ extern u16 gbLineMix[160];
 // mappers
 void (*mapper)(u16, u8)	   = NULL;
 void (*mapperRAM)(u16, u8) = NULL;
-u8	 (*mapperReadRAM)(u16) = NULL;
+u8   (*mapperReadRAM)(u16) = NULL;
 
 // registers
 gbRegister PC;
@@ -55,7 +55,7 @@ gbRegister AF;
 gbRegister BC;
 gbRegister DE;
 gbRegister HL;
-u16		   IFF;
+u16        IFF;
 // 0xff04
 u8 register_DIV = 0;
 // 0xff05
@@ -3884,6 +3884,13 @@ int getRamSize(){
 
 int getRomSize(){
   return gbRomSize;
+}
+
+void storeMemory(int32* store){
+  int i;
+  for (i = 0; i < 0xFFFF; i++){
+    store[i] = (int32) gbMemory[i];
+  }
 }
 
 void storeRam(int32* store){

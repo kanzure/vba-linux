@@ -93,8 +93,16 @@ public class Gb {
     public static final int WRAM_SIZE = 0x8000;
 
     public static final int VRAM_SIZE = 0x4000;
+    
+    public static final int RAM_SIZE = 0x8000;
+    
+    public static final int ROM_SIZE = 0x100000;
 
     public static final int NUM_REGISTERS = 27;
+
+    public static final int GB_MEMORY = 0x10000;
+
+    public static native void getMemory(int[] store);
 
     public static native void getRAM(int[] store);
 
