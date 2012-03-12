@@ -3896,6 +3896,16 @@ void storeMemory(int32* store){
   }
 }
 
+void writeMemory(int32* newMemory){
+  int i;
+  int j;
+  for (i = 0; i < 0x10; i++){
+    for (j = 0; j< 0x1000; j++){
+      gbMemoryMap[i][j] = (u8)(0xFF & newMemory[i*0x1000 + j]);
+    }
+  }
+}
+
 void storeRam(int32* store){
   int i;
   for (i = 0; i < gbRamSize; i++){

@@ -143,6 +143,18 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getMemory
   env->ReleaseIntArrayElements(arr, mem_store, 0);
 }
 
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    writeMemory
+ * Signature: ([I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_writeMemory
+(JNIEnv *env, jclass clazz, jintArray arr){
+  jint *new_memory = env->GetIntArrayElements(arr, 0);
+  writeMemory(new_memory);
+  env->ReleaseIntArrayElements(arr, new_memory, 0);
+}
+
 
 /*
  * Class:     com_aurellem_gb_Gb

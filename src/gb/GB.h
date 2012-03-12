@@ -48,6 +48,8 @@ extern int getRamSize();
 extern int getRomSize();
 
 extern void storeMemory(int32 *);
+extern void writeMemory(int32 *);
+
 extern void storeRam(int32 *);
 extern void storeRom(int32 *);
 extern void storeWRam(int32 *);
