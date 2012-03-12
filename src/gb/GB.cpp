@@ -3888,8 +3888,11 @@ int getRomSize(){
 
 void storeMemory(int32* store){
   int i;
-  for (i = 0; i < 0xFFFF; i++){
-    store[i] = (int32) gbMemory[i];
+  int j;
+  for (i = 0; i < 0x10; i++){
+    for (j = 0; j < 0x1000; j++){
+      store[i*0x1000 + j] = (int32) gbMemoryMap[i][j];
+    }
   }
 }
 
