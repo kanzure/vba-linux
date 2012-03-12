@@ -98,7 +98,7 @@ public class Gb {
     
     public static final int ROM_SIZE = 0x100000;
 
-    public static final int NUM_REGISTERS = 27;
+    public static final int NUM_REGISTERS = 28;
 
     public static final int GB_MEMORY = 0x10000;
 
@@ -115,4 +115,7 @@ public class Gb {
     public static native void getVRAM(int[] store);
     
     public static native void getRegisters(int[] store);
+    
+    public static native void writeRegisters(int[] newRegisters);
+
 }

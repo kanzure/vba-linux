@@ -3934,6 +3934,7 @@ void storeVRam(int32* store){
   }
 }
 
+
 void storeRegisters(int32* store){
   store[0] = (int32) PC.W;
   store[1] = (int32) SP.W;
@@ -3941,28 +3942,64 @@ void storeRegisters(int32* store){
   store[3] = (int32) BC.W;
   store[4] = (int32) DE.W;
   store[5] = (int32) HL.W;
-  store[6] = (int32) register_DIV;
-  store[7] = (int32) register_TIMA;
-  store[8] = (int32) register_TMA;
-  store[9] = (int32) register_TAC;
-  store[10] = (int32) register_IF;
-  store[11] = (int32) register_LCDC;
-  store[12] = (int32) register_STAT;
-  store[13] = (int32) register_SCY;
-  store[14] = (int32) register_SCX;
-  store[15] = (int32) register_LY;
-  store[16] = (int32) register_LYC;
-  store[17] = (int32) register_DMA;
-  store[18] = (int32) register_WY;
-  store[19] = (int32) register_WX;
-  store[20] = (int32) register_VBK;
-  store[21] = (int32) register_HDMA1;
-  store[22] = (int32) register_HDMA2;
-  store[23] = (int32) register_HDMA3;
-  store[24] = (int32) register_HDMA4;
-  store[25] = (int32) register_HDMA5;
-  store[26] = (int32) register_SVBK;
-  store[27] = (int32) register_IE;
+
+  store[6] = (int32) IFF;
+
+  store[7] = (int32) register_DIV;
+  store[8] = (int32) register_TIMA;
+  store[9] = (int32) register_TMA;
+  store[10] = (int32) register_TAC;
+  store[11] = (int32) register_IF;
+  store[12] = (int32) register_LCDC;
+  store[13] = (int32) register_STAT;
+  store[14] = (int32) register_SCY;
+  store[15] = (int32) register_SCX;
+  store[16] = (int32) register_LY;
+  store[17] = (int32) register_LYC;
+  store[18] = (int32) register_DMA;
+  store[19] = (int32) register_WY;
+  store[20] = (int32) register_WX;
+  store[21] = (int32) register_VBK;
+  store[22] = (int32) register_HDMA1;
+  store[23] = (int32) register_HDMA2;
+  store[24] = (int32) register_HDMA3;
+  store[25] = (int32) register_HDMA4;
+  store[26] = (int32) register_HDMA5;
+  store[27] = (int32) register_SVBK;
+  store[28] = (int32) register_IE;
+}
+
+void setRegisters(int32* registers){
+  PC.W = (u16) (0xFFFF & registers[0]);
+  SP.W = (u16) (0xFFFF & registers[1]);
+  AF.W = (u16) (0xFFFF & registers[2]);
+  BC.W = (u16) (0xFFFF & registers[3]);
+  DE.W = (u16) (0xFFFF & registers[4]);
+  HL.W = (u16) (0xFFFF & registers[5]);
+  IFF  = (u16) (0xFFFF & registers[6]);
+
+  register_DIV = (u8) (0xFF & registers[7]);
+  register_TIMA = (u8) (0xFF & registers[8]);
+  register_TMA = (u8) (0xFF & registers[9]);
+  register_TAC = (u8) (0xFF & registers[10]);
+  register_IF = (u8) (0xFF & registers[11]);
+  register_LCDC = (u8) (0xFF & registers[12]);
+  register_STAT = (u8) (0xFF & registers[13]);
+  register_SCY = (u8) (0xFF & registers[14]);
+  register_SCX = (u8) (0xFF & registers[15]);
+  register_LY = (u8) (0xFF & registers[16]);
+  register_LYC = (u8) (0xFF & registers[17]);
+  register_DMA = (u8) (0xFF & registers[18]);
+  register_WY = (u8) (0xFF & registers[19]);
+  register_WX = (u8) (0xFF & registers[20]);
+  register_VBK = (u8) (0xFF & registers[21]);
+  register_HDMA1 = (u8) (0xFF & registers[22]);
+  register_HDMA2 = (u8) (0xFF & registers[23]);
+  register_HDMA3 = (u8) (0xFF & registers[24]);
+  register_HDMA4 = (u8) (0xFF & registers[25]);
+  register_HDMA5 = (u8) (0xFF & registers[26]);
+  register_SVBK = (u8) (0xFF & registers[27]);
+  register_IE = (u8) (0xFF & registers[28]);
 }
 
 struct EmulatedSystem GBSystem =
