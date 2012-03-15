@@ -20,7 +20,6 @@ public class Gb {
      * @param rom - the name of the rom.
      */
     public static native void startEmulator(String rom);
-
     
     public static void loadVBA(){
 	System.loadLibrary("vba");
