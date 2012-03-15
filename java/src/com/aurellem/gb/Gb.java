@@ -97,7 +97,7 @@ public class Gb {
     
     public static final int ROM_SIZE = 0x100000;
 
-    public static final int NUM_REGISTERS = 28;
+    public static final int NUM_REGISTERS = 29;
 
     public static final int GB_MEMORY = 0x10000;
 
