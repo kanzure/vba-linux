@@ -2063,7 +2063,10 @@ fprintf(stderr,"Shutting down\n");
 }
 
 int tick () {
-  return theEmulator.emuMain(theEmulator.emuCount);
+  int ret;
+  ret = theEmulator.emuMain(theEmulator.emuCount);
+  // enable user input while ticking.
+  if (ret) {  sdlPollEvents(); }
 }
 
 void step () {
