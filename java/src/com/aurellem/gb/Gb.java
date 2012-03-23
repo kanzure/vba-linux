@@ -109,6 +109,8 @@ public class Gb {
 
     public static native void getROM(int[] store);
 
+    public static native void writeROM(int[] newROM);
+
     public static native void getWRAM(int[] store);
 
     public static native void getVRAM(int[] store);

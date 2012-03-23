@@ -52,6 +52,8 @@ extern void writeMemory(int32 *);
 
 extern void storeRam(int32 *);
 extern void storeRom(int32 *);
+extern void writeRom(int32 *);
+
 extern void storeWRam(int32 *);
 extern void storeVRam(int32 *);
 extern void storeRegisters(int32 *);

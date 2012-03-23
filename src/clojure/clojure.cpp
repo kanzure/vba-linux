@@ -184,6 +184,20 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getROM
 
 /*
  * Class:     com_aurellem_gb_Gb
+ * Method:    writeROM
+ * Signature: ([I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_writeROM
+(JNIEnv *env, jclass clazz, jintArray arr){
+  jint *new_rom = env->GetIntArrayElements(arr, 0);
+  writeRom(new_rom);
+  env->ReleaseIntArrayElements(arr, new_rom, 0);
+}
+
+
+
+/*
+ * Class:     com_aurellem_gb_Gb
  * Method:    getWRAM
  * Signature: ([I)V
  */

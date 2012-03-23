@@ -3920,6 +3920,13 @@ void storeRom(int32* store){
   }
 }
 
+void writeRom(int32* new_rom){
+  int i;
+  for (i = 0; i < gbRomSize; i++){
+    gbRom[i] = (u8)(0xFF & new_rom[i]);
+  }
+}
+
 void storeWRam(int32* store){
   int i;
   for (i = 0; i < 0x8000; i++){
