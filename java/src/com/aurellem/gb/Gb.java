@@ -119,4 +119,6 @@ public class Gb {
     
     public static native void writeRegisters(int[] newRegisters);
 
+    public static native void translateRGB(int[] rgb, int[] store);
+
 }

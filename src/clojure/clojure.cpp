@@ -25,7 +25,7 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_sayHello
  */
 JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_startEmulator
 (JNIEnv *env, jclass clazz, jstring str){
-  UNUSED(env);UNUSED(clazz);UNUSED(str);
+  UNUSED(clazz);
 
   const char *_romName = env->GetStringUTFChars(str, 0);
   size_t len = strlen(_romName);
@@ -247,3 +247,66 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_writeRegisters
   env->ReleaseIntArrayElements(arr, new_registers, 0);
 }
 
+
+int intensity[32] = {
+  0x00, 0x10, 0x20, 0x30, 0x40, 0x50, 0x5e, 0x6c, 0x7a, 0x88, 0x94,
+  0xa0, 0xae, 0xb7, 0xbf, 0xc6, 0xce, 0xd3, 0xd9, 0xdf, 0xe3, 0xe7,
+  0xeb, 0xef, 0xf3, 0xf6, 0xf9, 0xfb, 0xfd, 0xfe, 0xff, 0xff };
+
+int influence[3][3] = 
+  {
+    {16,4,4},
+    {8,16,8},
+    {0,8,16}
+  };
+
+int* translateRGB(int* rgb, int* store){
+
+  int	m[3][3];
+  int	i,j;
+
+  for (i=0;i<3;i++){
+    for (j=0;j<3;j++){
+      m[i][j] = (intensity[rgb[i]>>3]*influence[i][j]) >> 5;}}
+
+  for (i=0;i<3;i++)
+    {
+      if (m[0][i]>m[1][i])
+ 	{
+ 	  j=m[0][i]; 
+ 	  m[0][i]=m[1][i]; 
+ 	  m[1][i]=j;
+ 	}
+
+      if (m[1][i]>m[2][i])
+ 	{
+ 	  j=m[1][i]; 
+ 	  m[1][i]=m[2][i]; 
+ 	  m[2][i]=j;
+ 	}
+
+      if (m[0][i]>m[1][i])
+ 	{
+ 	  j=m[0][i]; 
+ 	  m[0][i]=m[1][i]; 
+ 	  m[1][i]=j;
+ 	}
+
+      store[i]=(((m[0][i]+m[1][i]*2+m[2][i]*4)*5) >> 4)+32;
+    }
+  return store;
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    translateRGB
+ * Signature: ([I[I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_translateRGB
+(JNIEnv *env, jclass clazz, jintArray rgb, jintArray store){
+  jint *RGB_Arr = env->GetIntArrayElements(rgb, 0);
+  jint *store_Arr = env->GetIntArrayElements(store,0);
+  translateRGB(RGB_Arr, store_Arr);
+  env->ReleaseIntArrayElements(rgb, RGB_Arr, 0);
+  env->ReleaseIntArrayElements(store, store_Arr, 0);
+}

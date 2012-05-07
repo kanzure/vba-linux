@@ -23,15 +23,14 @@
 	   classpath="${build}"/>
   </target>
 
-  <target name="dist">
+  <target name="dist" depends="native">
     <jar jarfile="${dist}/gb-bindings.jar">
       <fileset dir="${build}"/>
       <fileset dir="${src}"/>
     </jar>
   </target>
 
-  <target name="all" depends="native, dist"/>
-    
+  <target name="all" depends="dist"/>
 
   <target name="clean" > 
     <delete dir="${build}"/> 
