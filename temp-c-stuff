@@ -1,0 +1,72 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// This section of code is used to convert an RGB (pc) triplet into a RGB (gameboy)
+// triplet. This section of code was kindly donated by Brett Bibby (GameBrains).
+
+BYTE intensity[32] = 
+  {
+    0x00,0x10,0x20,0x30,0x40,0x50,0x5e,0x6c,0x7a,0x88,0x94,0xa0,0xae,0xb7,0xbf,0xc6,
+    0xce,0xd3,0xd9,0xdf,0xe3,0xe7,0xeb,0xef,0xf3,0xf6,0xf9,0xfb,0xfd,0xfe,0xff,0xff
+  };
+
+unsigned char influence[3][3] = 
+  {
+    {16,4,4},
+    {8,16,8},
+    {0,8,16}
+  };
+
+RGBQUAD translate(BYTE rgb[3])
+{
+  RGBQUAD color;
+  BYTE	tmp[3];
+  BYTE	m[3][3];
+  BYTE	i,j;
+
+  for (i=0;i<3;i++)
+    for (j=0;j<3;j++)
+      m[i][j] = (intensity[rgb[i]>>3]*influence[i][j]) >> 5;
+
+  for (i=0;i<3;i++)
+    {
+      if (m[0][i]>m[1][i])
+	{
+	  j=m[0][i]; 
+	  m[0][i]=m[1][i]; 
+	  m[1][i]=j;
+	}
+
+      if (m[1][i]>m[2][i])
+	{
+	  j=m[1][i]; 
+	  m[1][i]=m[2][i]; 
+	  m[2][i]=j;
+	}
+
+      if (m[0][i]>m[1][i])
+	{
+	  j=m[0][i]; 
+	  m[0][i]=m[1][i]; 
+	  m[1][i]=j;
+	}
+
+      tmp[i]=(((m[0][i]+m[1][i]*2+m[2][i]*4)*5) >> 4)+32;
+    }
+
+  color.rgbRed	= tmp[0];
+  color.rgbGreen	= tmp[1];
+  color.rgbBlue	= tmp[2];
+
+  return color;
+}
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
