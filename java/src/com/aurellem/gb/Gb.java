@@ -121,4 +121,12 @@ public class Gb {
 
     public static native void translateRGB(int[] rgb, int[] store);
 
+    public static final int DISPLAY_WIDTH = 160;
+     
+    public static final int DISPLAY_HEIGHT = 144;
+
+    public static native void getPixels(int[] store);
+
+    public static native void nwritePNG(String filename);
+
 }

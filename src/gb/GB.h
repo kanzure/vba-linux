@@ -44,6 +44,8 @@ extern bool gbWritePNGFile(const char *);
 extern bool gbWriteBMPFile(const char *);
 extern bool gbReadGSASnapshot(const char *);
 
+extern void getPixels32(int32 *);
+
 extern int getRamSize();
 extern int getRomSize();
 

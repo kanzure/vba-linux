@@ -3878,6 +3878,39 @@ int gbEmulate(int ticksToStop)
 
 
 //RLM: 
+/**
+void getPixels32(int32* store){
+  utilWriteBMP((u8*)store, 144, 160, 32, pix);
+}
+**/
+
+void getPixels32(int32* store){
+  int w = 160;
+  int h = 144;
+
+  int sizeX = w;
+  int sizeY = h;
+
+  u32 *pixU32 = (u32 *)(pix + 4 * (w + 1) * (h));
+  for (int y = 0; y < sizeY; y++)
+    {
+      for (int x = 0; x < sizeX; x++)
+	{
+	  u32 v = *pixU32++;
+
+	  u8 b = ((v >> systemBlueShift) & 0x001f) << 3; // B
+	  u8 g = ((v >> systemGreenShift) & 0x001f) << 3; // G
+	  u8 r = ((v >> systemRedShift) & 0x001f) << 3; // R
+
+	  int32 rgb = (r << 16 ) + (g << 8) + b;
+	  *store++ = rgb;
+	}
+      pixU32++;
+      pixU32 -= 2 * (w + 1);
+    }
+}
+
+
 int getRamSize(){
   return gbRamSize;
 }

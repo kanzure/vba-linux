@@ -310,3 +310,29 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_translateRGB
   env->ReleaseIntArrayElements(rgb, RGB_Arr, 0);
   env->ReleaseIntArrayElements(store, store_Arr, 0);
 }
+
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getPixels
+ * Signature: ([I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getPixels
+(JNIEnv *env, jclass clazz, jintArray arr){
+  jint *pixel_store = env->GetIntArrayElements(arr, 0);
+  getPixels32(pixel_store);
+  env->ReleaseIntArrayElements(arr, pixel_store, 0);
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    nwritePNG
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_nwritePNG
+(JNIEnv *env, jclass clazz, jstring filename){
+  const char *_filename = env->GetStringUTFChars(filename, 0);
+  gbWritePNGFile(_filename);
+}
+
+  
