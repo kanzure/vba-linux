@@ -3890,6 +3890,8 @@ void getPixels32(int32* store){
 
   int sizeX = w;
   int sizeY = h;
+  
+  store += w * (h - 1); 
 
   u32 *pixU32 = (u32 *)(pix + 4 * (w + 1) * (h));
   for (int y = 0; y < sizeY; y++)
@@ -3905,6 +3907,7 @@ void getPixels32(int32* store){
 	  int32 rgb = (r << 16 ) + (g << 8) + b;
 	  *store++ = rgb;
 	}
+      store -= (2 * w);
       pixU32++;
       pixU32 -= 2 * (w + 1);
     }
