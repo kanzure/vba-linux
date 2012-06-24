@@ -3753,7 +3753,7 @@ int gbEmulate(int ticksToStop)
       while (soundTicks < 0) // must be < 1 when soundtick_t is real data type
 	{
 	  soundTicks += SOUND_CLOCK_TICKS;
-	  printf("gbSoundTick()\n");
+	  //printf("RLM: gbSoundTick()\n");
 	  gbSoundTick();
 	}
 
