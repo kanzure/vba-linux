@@ -63,6 +63,8 @@ extern void setRegisters(int32 *);
 
 extern long gbWriteMemSaveStatePos(char *, int);
 
+extern u8 gbReadMemory(u16 address);
+
 extern struct EmulatedSystem GBSystem;
 extern struct EmulatedSystemCounters &GBSystemCounters;
 

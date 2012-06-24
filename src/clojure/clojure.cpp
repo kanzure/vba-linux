@@ -2,6 +2,7 @@
 #include "../sdl/Drive.h"
 #include "../gb/GB.h"
 
+
 #include <string.h>
 
 #define UNUSED(x)  (void)(x)
@@ -336,3 +337,13 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_nwritePNG
 }
 
   
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    readMemory
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_readMemory
+(JNIEnv *env, jclass clazz, jint address){
+  return (jint) gbReadMemory((u16) address); 
+}

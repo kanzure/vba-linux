@@ -129,4 +129,5 @@ public class Gb {
 
     public static native void nwritePNG(String filename);
 
+    public static native int readMemory(int address);
 }
