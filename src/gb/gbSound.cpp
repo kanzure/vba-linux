@@ -5,6 +5,7 @@
 
 #include <cstring>
 #include <cassert>
+#include <stdio.h>
 
 #include "../common/System.h"
 #include "../common/Util.h"
@@ -729,7 +730,7 @@ void gbSoundMix()
 	{
 		soundFinalWave[++soundBufferIndex] = res;
 		if ((soundFrameSoundWritten + 1) >= countof(soundFrameSound))
-			/*assert(false)*/;
+		  printf("oh noes!\n");
 		else
 			soundFrameSound[++soundFrameSoundWritten] = res;
 	}
@@ -737,7 +738,7 @@ void gbSoundMix()
 	{
 		soundFinalWave[soundBufferIndex++] = res;
 		if (soundFrameSoundWritten >= countof(soundFrameSound))
-			/*assert(false)*/;
+		  printf("oh noes!\n");
 		else
 			soundFrameSound[soundFrameSoundWritten++] = res;
 	}
@@ -816,7 +817,7 @@ void gbSoundMix()
 	{
 		soundFinalWave[-1 + soundBufferIndex++]		   = res;
 		if ((soundFrameSoundWritten) >= countof(soundFrameSound))
-			/*assert(false)*/;
+		  printf("oh noes!\n");
 		else
 			soundFrameSound[-1 + soundFrameSoundWritten++] = res;
 	}
@@ -824,7 +825,7 @@ void gbSoundMix()
 	{
 		soundFinalWave[soundBufferIndex++]			  = res;
 		if ((soundFrameSoundWritten + 1) >= countof(soundFrameSound))
-			/*assert(false)*/;
+		  printf("oh noes!\n");
 		else
 			soundFrameSound[soundFrameSoundWritten++] = res;
 	}
@@ -848,7 +849,8 @@ void gbSoundTick()
 			soundFinalWave[soundBufferIndex++] = 0;
 			soundFinalWave[soundBufferIndex++] = 0;
 			if ((soundFrameSoundWritten + 1) >= countof(soundFrameSound))
-				/*assert(false)*/;
+			  
+			printf("oh noes!\n");
 			else
 			{
 				soundFrameSound[soundFrameSoundWritten++] = 0;

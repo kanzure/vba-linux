@@ -5,6 +5,13 @@
   <property name="dist" value="dist"/>
   <property name="headers"  value="headers"/>
   <property name="artifacts" value="../artifacts"/>
+  <property name="lib"  value="lib"/>
+
+  <path id="classpath">
+    <pathelement path="${lib}/tritonus_aos-0.3.6.jar"/>
+    <pathelement path="${lib}/tritonus_share-0.3.6.jar"/>
+  </path>
+
 
   <target name="prepare">
     <mkdir dir="${build}"/>
@@ -14,6 +21,7 @@
 
   <target name="compile" depends="prepare" >
     <javac srcdir="${src}" destdir="${build}"
+	   classpathref="classpath"
 	   includeantruntime="false"/>
   </target>
 

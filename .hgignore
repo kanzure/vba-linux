@@ -16,3 +16,4 @@ java/dist/*
 java/headers/*
 java/.ant-targets-build.xml
 html/*
+java/lib/*

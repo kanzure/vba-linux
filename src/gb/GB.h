@@ -66,6 +66,7 @@ extern long gbWriteMemSaveStatePos(char *, int);
 extern u8 gbReadMemory(u16 address);
 
 extern u16	 soundFrameSound[735 * 30 * 2];
+extern u16	 soundFinalWave[1470];
 extern int32 soundFrameSoundWritten;
 
 extern struct EmulatedSystem GBSystem;

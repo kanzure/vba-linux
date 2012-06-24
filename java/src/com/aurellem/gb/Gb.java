@@ -101,7 +101,9 @@ public class Gb {
 
     public static final int GB_MEMORY = 0x10000;
 
-    public static final int SOUND_SIZE = 735 * 30 * 2;
+    public static final int SOUND_SIZE = 
+	44100*2;
+    //1470*2;
 
     public static native void getMemory(int[] store);
 
@@ -129,12 +131,12 @@ public class Gb {
 
     public static native void getPixels(int[] store);
 
-    public static native void getFrameSound(int[] store);
-
     public static native void nwritePNG(String filename);
 
     public static native int readMemory(int address);
     
+    public static native void getFrameSound(byte[] store);
+
     public static native int getSoundFrameWritten();
 
     public static native void setSoundFrameWritten(int frames);
