@@ -730,7 +730,8 @@ void gbSoundMix()
 	{
 		soundFinalWave[++soundBufferIndex] = res;
 		if ((soundFrameSoundWritten + 1) >= countof(soundFrameSound))
-		  printf("oh noes!\n");
+		  
+		  ; //printf("oh noes!\n");
 		else
 			soundFrameSound[++soundFrameSoundWritten] = res;
 	}
@@ -738,7 +739,7 @@ void gbSoundMix()
 	{
 		soundFinalWave[soundBufferIndex++] = res;
 		if (soundFrameSoundWritten >= countof(soundFrameSound))
-		  printf("oh noes!\n");
+		  ; //printf("oh noes!\n");
 		else
 			soundFrameSound[soundFrameSoundWritten++] = res;
 	}
@@ -817,7 +818,7 @@ void gbSoundMix()
 	{
 		soundFinalWave[-1 + soundBufferIndex++]		   = res;
 		if ((soundFrameSoundWritten) >= countof(soundFrameSound))
-		  printf("oh noes!\n");
+		  ;//printf("oh noes!\n");
 		else
 			soundFrameSound[-1 + soundFrameSoundWritten++] = res;
 	}
@@ -825,7 +826,7 @@ void gbSoundMix()
 	{
 		soundFinalWave[soundBufferIndex++]			  = res;
 		if ((soundFrameSoundWritten + 1) >= countof(soundFrameSound))
-		  printf("oh noes!\n");
+		  ;//printf("oh noes!\n");
 		else
 			soundFrameSound[soundFrameSoundWritten++] = res;
 	}
@@ -833,49 +834,49 @@ void gbSoundMix()
 
 void gbSoundTick()
 {
-	if (systemSoundOn)
+  if (systemSoundOn)
+    {
+      if (soundMasterOn)
 	{
-		if (soundMasterOn)
-		{
-			gbSoundChannel1();
-			gbSoundChannel2();
-			gbSoundChannel3();
-			gbSoundChannel4();
+	  gbSoundChannel1();
+	  gbSoundChannel2();
+	  gbSoundChannel3();
+	  gbSoundChannel4();
 
-			gbSoundMix();
-		}
-		else
-		{
-			soundFinalWave[soundBufferIndex++] = 0;
-			soundFinalWave[soundBufferIndex++] = 0;
-			if ((soundFrameSoundWritten + 1) >= countof(soundFrameSound))
-			  
-			printf("oh noes!\n");
-			else
-			{
-				soundFrameSound[soundFrameSoundWritten++] = 0;
-				soundFrameSound[soundFrameSoundWritten++] = 0;
-			}
-		}
-
-		soundIndex++;
-
-		if (2 * soundBufferIndex >= soundBufferLen)
-		{
-			if (systemSoundOn)
-			{
-				if (soundPaused)
-				{
-					extern void soundResume();
-					soundResume();
-				}
-
-				systemSoundWriteToBuffer();
-			}
-			soundIndex		 = 0;
-			soundBufferIndex = 0;
-		}
+	  gbSoundMix();
 	}
+      else
+	{
+	  soundFinalWave[soundBufferIndex++] = 0;
+	  soundFinalWave[soundBufferIndex++] = 0;
+	  if ((soundFrameSoundWritten + 1) >= countof(soundFrameSound))
+			  
+	    ;//printf("oh noes!\n");
+	  else
+	    {
+	      soundFrameSound[soundFrameSoundWritten++] = 0;
+	      soundFrameSound[soundFrameSoundWritten++] = 0;
+	    }
+	}
+
+      soundIndex++;
+
+      if (2 * soundBufferIndex >= soundBufferLen)
+	{
+	  if (systemSoundOn)
+	    {
+	      if (soundPaused)
+		{
+		  extern void soundResume();
+		  soundResume();
+		}
+
+	      systemSoundWriteToBuffer();
+	    }
+	  soundIndex		 = 0;
+	  soundBufferIndex = 0;
+	}
+    }
 }
 
 void gbSoundReset()

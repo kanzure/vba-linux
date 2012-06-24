@@ -3092,9 +3092,23 @@ int systemScreenCapture(int a)
 
 void soundCallback(void *,u8 *stream,int len){}
 
+
+int writeCounter = 0;
+u8 soundCopyBuffer[1470 * 2];
+
+
+
 void systemSoundWriteToBuffer(){
-	soundDriver->write(soundFinalWave, soundBufferLen);  
+  //printf("sound write counter (len) : %07d (%d)\n", 
+  //writeCounter++, soundBufferLen);
+  //int i;
+  //u8* soundBytes = (u8*) soundFinalWave;
+  //for (i = 0; i <   1470 * 2; i++){
+  //  soundCopyBuffer[i] = soundBytes[i];
+  //}
+  soundDriver->write(soundFinalWave, soundBufferLen);  
 }
+
 
 void systemSoundClearBuffer()
 {

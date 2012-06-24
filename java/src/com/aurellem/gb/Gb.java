@@ -141,4 +141,6 @@ public class Gb {
 
     public static native void setSoundFrameWritten(int frames);
 
+    public static native void getFrameSound2(byte[] store);
+
 }

@@ -3223,7 +3223,7 @@ int gbEmulate(int ticksToStop)
 	}
 
       extButtons = (newmask >> 18);
-      speedup	   = (extButtons & 1) != 0;
+      speedup	   =  (extButtons & 1) != 0;
 
       VBAMovieResetIfRequested();
       //printf("RLM: before Lua functions\n");
@@ -3753,7 +3753,7 @@ int gbEmulate(int ticksToStop)
       while (soundTicks < 0) // must be < 1 when soundtick_t is real data type
 	{
 	  soundTicks += SOUND_CLOCK_TICKS;
-
+	  printf("gbSoundTick()\n");
 	  gbSoundTick();
 	}
 

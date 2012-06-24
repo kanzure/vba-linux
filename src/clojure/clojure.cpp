@@ -365,10 +365,10 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getFrameSound
   }
   
   /*
-    u8* soundBytes = (u8*) soundFinalWave;
-    for (i = 0; i < 1470*2 ; i++){
+  u8* soundBytes = (u8*) soundFinalWave;
+  for (i = 0; i < 1470*2 ; i++){
     sound_store[i] = (jbyte) soundBytes[i];
-    }
+  }
   */
 
   env->ReleaseByteArrayElements(arr, sound_store, 0);
@@ -395,3 +395,23 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_setSoundFrameWritten
   soundFrameSoundWritten = newSoundFrameWritten;
 }
 
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getFrameSound2
+ * Signature: ([B)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getFrameSound2
+(JNIEnv *env, jclass clazz, jbyteArray arr){
+  setbuf(stdout, NULL);
+
+  jbyte *sound_store = env->GetByteArrayElements(arr, 0);
+  int i;
+
+  for (i = 0; i < 1470*2; i++){
+    sound_store[i] = (jbyte) soundCopyBuffer[i];
+  }
+  
+  env->ReleaseByteArrayElements(arr, sound_store, 0);
+
+}

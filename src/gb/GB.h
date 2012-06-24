@@ -68,6 +68,8 @@ extern u8 gbReadMemory(u16 address);
 extern u16	 soundFrameSound[735 * 30 * 2];
 extern u16	 soundFinalWave[1470];
 extern int32 soundFrameSoundWritten;
+extern u8        soundCopyBuffer[1470 * 2];
+
 
 extern struct EmulatedSystem GBSystem;
 extern struct EmulatedSystemCounters &GBSystemCounters;

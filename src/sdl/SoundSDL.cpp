@@ -16,6 +16,8 @@
 // Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 #include "SoundSDL.h"
+#include <stdio.h>
+
 
 extern int emulating;
 extern bool speedup;
@@ -37,53 +39,61 @@ void SoundSDL::soundCallback(void *data, u8 *stream, int len)
 
 void SoundSDL::read(u16 * stream, int length)
 {
-	if (!_initialized || length <= 0 || !emulating)
-		return;
+  if (!_initialized || length <= 0 || !emulating)
+    return;
 
-	SDL_mutexP(_mutex);
-	_rbuf.read(stream, std::min(static_cast<std::size_t>(length) / 2, _rbuf.used()));
+  SDL_mutexP(_mutex);
+  _rbuf.read(stream, std::min(static_cast<std::size_t>(length) / 2, _rbuf.used()));
 
-	SDL_CondSignal(_cond);
-	SDL_mutexV(_mutex);
+  SDL_CondSignal(_cond);
+  SDL_mutexV(_mutex);
 }
 
 void SoundSDL::write(u16 * finalWave, int length)
 {
-	if (!_initialized)
-		return;
+  if (!_initialized)
+    return;
 
-	if (SDL_GetAudioStatus() != SDL_AUDIO_PLAYING)
-		SDL_PauseAudio(0);
+  if (SDL_GetAudioStatus() != SDL_AUDIO_PLAYING){
+    SDL_PauseAudio(0);
+    printf("SDLPauseAudio\n");
+  }
 
-	SDL_mutexP(_mutex);
+  SDL_mutexP(_mutex);
 
-	unsigned int samples = length / 4;
+  //printf("RLM: length = %d\n", length);
 
-	std::size_t avail;
-	while ((avail = _rbuf.avail() / 2) < samples)
+  unsigned int samples = length / 4;
+
+  // printf("RLM: length / 4 = %d\n", samples);
+
+  std::size_t avail;
+  while ((avail = _rbuf.avail() / 2) < samples)
+    {
+      _rbuf.write(finalWave, avail * 2);
+
+      finalWave += avail * 2;
+      samples -= avail;
+
+      // If emulating and not in speed up mode, synchronize to audio
+      // by waiting till there is enough room in the buffer
+      if (emulating && !speedup)
 	{
-		_rbuf.write(finalWave, avail * 2);
-
-		finalWave += avail * 2;
-		samples -= avail;
-
-		// If emulating and not in speed up mode, synchronize to audio
-		// by waiting till there is enough room in the buffer
-		if (emulating && !speedup)
-		{
-			SDL_CondWait(_cond,_mutex);
-		}
-		else
-		{
-			// Drop the remaining of the audio data
-			SDL_mutexV(_mutex);
-			return;
-		}
+	  //printf("SDL_CondWait\n");
+	  SDL_CondWait(_cond,_mutex);
 	}
+      else
+	{
+	  // Drop the remainder of the audio data
+	  printf("RLM: Drop samples!\n");
+	  SDL_mutexV(_mutex);
+	  return;
+	}
+    }
 
-	_rbuf.write(finalWave, samples * 2);
-
-	SDL_mutexV(_mutex);
+  _rbuf.write(finalWave, samples * 2);
+  //printf("RLM: writing %d samples\n", samples);
+  SDL_mutexV(_mutex);
 }
 
 
