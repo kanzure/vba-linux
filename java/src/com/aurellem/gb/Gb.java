@@ -101,9 +101,7 @@ public class Gb {
 
     public static final int GB_MEMORY = 0x10000;
 
-    public static final int SOUND_SIZE = 
-	44100*2;
-    //1470*2;
+    public static final int MAX_SOUND_BYTES = 44100*2;
 
     public static native void getMemory(int[] store);
 
