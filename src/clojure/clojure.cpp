@@ -347,3 +347,41 @@ JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_readMemory
 (JNIEnv *env, jclass clazz, jint address){
   return (jint) gbReadMemory((u16) address); 
 }
+
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getFrameSound
+ * Signature: ([I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getFrameSound
+(JNIEnv *env, jclass clazz, jintArray arr){
+  jint *sound_store = env->GetIntArrayElements(arr, 0);
+  int i;
+  for (i = 0; i < 44100; i++){
+    sound_store[i] = (jint) soundFrameSound[i];
+  }
+  env->ReleaseIntArrayElements(arr, sound_store, 0);
+}
+
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getSoundFrameWritten
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_getSoundFrameWritten
+  (JNIEnv *env, jclass clazz){
+  return soundFrameSoundWritten;
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    setSoundFrameWritten
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_setSoundFrameWritten
+(JNIEnv *env, jclass clazz , jint newSoundFrameWritten){
+  soundFrameSoundWritten = newSoundFrameWritten;
+}
+
