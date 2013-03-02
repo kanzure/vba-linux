@@ -1,7 +1,7 @@
 #include "com_aurellem_gb_Gb.h"
 #include "../sdl/Drive.h"
 #include "../gb/GB.h"
-
+#include "../gb/gbMemory.h"
 
 #include <string.h>
 
@@ -60,6 +60,16 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_step
 JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_nstep
 (JNIEnv *env, jclass clazz, jint keymask){
   step(keymask);
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    stepUntilCapture
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_stepUntilCapture
+(JNIEnv *env, jclass clazz){
+  stepUntilCapture();
 }
 
 /*
@@ -345,7 +355,18 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_nwritePNG
  */
 JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_readMemory
 (JNIEnv *env, jclass clazz, jint address){
-  return (jint) gbReadMemory((u16) address); 
+  return (jint) gbReadMemory((u16) address);
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    setMemoryAt
+ * Signature: (I;I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_setMemoryAt
+(JNIEnv *env, jclass clazz, jint address, jint value){
+    // kanzure: wtf ?
+    gbWriteMemory(address, value);
 }
 
 /*
@@ -415,3 +436,15 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_getFrameSound2
   env->ReleaseByteArrayElements(arr, sound_store, 0);
 
 }
+
+// kanzure: hope this works..
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    setROMBank
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_setROMBank
+  (JNIEnv *env, jclass clazz, jint bank){
+  memset(&gbDataMBC3.mapperROMBank, bank, 1 * sizeof(int32));
+}
+

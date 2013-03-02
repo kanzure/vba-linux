@@ -242,6 +242,7 @@ int showSpeed = 1;
 int showSpeedTransparent = 1;
 bool disableStatusMessages = false;
 bool paused = false;
+bool untilCapture = false;
 bool pauseNextFrame = false;
 bool debugger = false;
 bool debuggerStub = false;
@@ -1764,6 +1765,8 @@ void sdlPollEvents()
       case SDLK_ESCAPE:
         emulating = 0;
         break;
+      case SDLK_F12:
+        untilCapture = !untilCapture;
       case SDLK_f:
         if(!(event.key.keysym.mod & MOD_NOCTRL) &&
            (event.key.keysym.mod & KMOD_CTRL)) {
@@ -2078,7 +2081,8 @@ void step () {
     }
     //printf("RLM: emulator main called\n");
   } else {
-    SDL_Delay(500);
+    //SDL_Delay(500);
+    // kanzure: wtf! trying to get throttling to work.
   }
   sdlPollEvents();
   SDL_ShowCursor(SDL_DISABLE);
@@ -2095,7 +2099,26 @@ void step(int keymask){
   currentButtons[0] = keymask;
 }
 
+// let the player control the game until he decides he hates it. This is particularly useful for playing from the repl.
+void stepUntilCapture() {
+    untilCapture = true;
+    //currentButtons[0] = 0;
+    //systemClearJoypads();
+    //sdlUpdateKey(SDLK_F12, false);
 
+    //while (currentButtons[0] != 2048) {
+    while (untilCapture) {
+        /* if (currentButtons[0] != 0) {
+            printf("currentButtons[o] is %d\n", currentButtons[0]);
+        } */
+        step();
+    }
+
+    // reset the buttons so that this function can be called in the future
+    //currentButtons[0] = 0;
+    //systemClearJoypads();
+    //sdlUpdateKey(SDLK_F12, false);
+}
 
 int main(int argc, char **argv)
 {
@@ -2673,7 +2696,8 @@ int main(int argc, char **argv)
   if(!soundOffFlag)
     soundInit();
 
-  autoFrameSkipLastTime = throttleLastTime = systemGetClock();
+  // kanzure: trying to fix throttling
+  //autoFrameSkipLastTime = throttleLastTime = systemGetClock();
   //printf("RLM: and now for the movie part!\n");
 
   switch(useMovie)
@@ -2927,12 +2951,13 @@ u32 systemGetJoypad(int which, bool sensor)
   if((res & 192) == 192)
     res &= ~128;
 */
-/*  
-  if(sdlbuttons[which][KEY_BUTTON_SPEED])
+
+/* if(sdlbuttons[which][KEY_BUTTON_SPEED])
     res |= 1024;
   if(sdlButtons[which][KEY_BUTTON_CAPTURE])
     res |= 2048;
 */
+
 	res = currentButtons[which];
 
   if(autoFire) {
@@ -2941,9 +2966,8 @@ u32 systemGetJoypad(int which, bool sensor)
       res |= autoFire;
     autoFireToggle = !autoFireToggle;
   }
-  
+
   //if (res) fprintf(stdout,"%x\n",res);
-  
   return res;
 }
 

@@ -74,4 +74,7 @@ extern u8        soundCopyBuffer[1470 * 2];
 extern struct EmulatedSystem GBSystem;
 extern struct EmulatedSystemCounters &GBSystemCounters;
 
+// kanzure: for setMemoryAt
+extern void gbWriteMemory(register u16, register u8);
+
 #endif // VBA_GB_H

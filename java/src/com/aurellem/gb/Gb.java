@@ -26,7 +26,9 @@ public class Gb {
     }
 
     public static native void step();
-    
+
+    public static native void stepUntilCapture();
+
     public static native int ntick();
 
     public static boolean tick(){
@@ -93,19 +95,21 @@ public class Gb {
 
     public static final int VRAM_SIZE = 0x4000;
     
-    public static final int RAM_SIZE = 0x8000;
+    public static final int RAM_SIZE = 0x10000;
     
-    public static final int ROM_SIZE = 0x100000;
+    public static final int ROM_SIZE = 0x200000;
 
     public static final int NUM_REGISTERS = 29;
 
-    public static final int GB_MEMORY = 0x10000;
+    public static final int GB_MEMORY = 0x20000;
 
     public static final int MAX_SOUND_BYTES = 44100*2;
 
     public static native void getMemory(int[] store);
 
     public static native void writeMemory(int[] newMemory);
+
+    public static native void setMemoryAt(int address, int value);
 
     public static native void getRAM(int[] store);
 
@@ -140,5 +144,7 @@ public class Gb {
     public static native void setSoundFrameWritten(int frames);
 
     public static native void getFrameSound2(byte[] store);
+
+    public static native void setROMBank(int bank);
 
 }
