@@ -26,6 +26,11 @@ make
 
 Build products are dumped into: ./src/clojure/.libs/
 
+## Using python
+
+See [python-vba-wrapper](https://github.com/kanzure/python-vba-wrapper) for
+using this with python. Read below for using vba-linux with jython.
+
 ## Using the java bindings
 
 Make sure vba-linux is available within "java.library.path":
