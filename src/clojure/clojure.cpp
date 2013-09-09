@@ -2,11 +2,168 @@
 #include "../sdl/Drive.h"
 #include "../gb/GB.h"
 #include "../gb/gbMemory.h"
+#include "../gb/gbCheats.h"
+#include "../gb/gbGlobals.h"
+
+// for VBAMovieOpen
+#include "../common/movie.h"
 
 #include <string.h>
 
 #define UNUSED(x)  (void)(x)
 
+extern int showScreen;
+extern u16 currentButtons[4];
+
+extern "C" {
+    void say_hello(void) {
+        printf("hello cruel world\n");
+    }
+
+    void step_until_f12(void) {
+        stepUntilCapture();
+    }
+
+    void emu_step(int keymask) {
+        step(keymask);
+    }
+
+    void emu_tick() {
+        tick();
+    }
+
+    int get_current_buttons() {
+        return currentButtons[0];
+    }
+
+    void set_showScreen(int status) {
+        showScreen = status;
+    }
+
+    // dunno if this is correct or useful
+    int get_rom_bank() {
+        return gbDataMBC3.mapperROMBank;
+    }
+
+    void write_memory_at(u16 address, u8 value) {
+        // borked? gbWriteMemory(address, value);
+        gbWriteMemoryQuick(address, value);
+    }
+
+    int read_memory_at(u16 address) {
+        return (int) gbReadMemoryQuick(address);
+    }
+
+    // this is probably a memory leak
+    /*
+    char * buggy_get_state() {
+        char * buffer = new char[MAX_SAVE_SIZE];
+        gbWriteMemSaveStatePos(buffer, MAX_SAVE_SIZE);
+        return buffer;
+    }*/
+
+    void get_state(char * buffer, int size) {
+        gbWriteMemSaveStatePos(buffer, size);
+    }
+
+    void set_state(char * buffer, int size) {
+        gbReadMemSaveState(buffer, size);
+    }
+
+    // 65536 bytes (0x10000)
+    void get_memory(int32 * memory) {
+        storeMemory(memory);
+    }
+
+    void set_memory(int32 * new_memory) {
+        writeMemory(new_memory);
+    }
+
+    // 29 bytes
+    void get_registers(int32 * registers) {
+        storeRegisters(registers);
+    }
+
+    void set_registers(int32 * new_registers) {
+        setRegisters(new_registers);
+    }
+
+    int get_ram_size() {
+        return getRamSize();
+    }
+
+    int get_rom_size() {
+        return getRomSize();
+    }
+
+    // TODO: why doesn't this work with ctypes.c_int.in_dll(self._vba, "MAX_SAVE_SIZE").value ?
+    const int MAX_SAVE_SIZE = 20000;
+
+    int get_max_save_size() {
+        return MAX_SAVE_SIZE;
+    }
+
+    void get_ram(int32 * ram) {
+        storeRam(ram);
+    }
+
+    // size: 0x8000
+    void get_wram(int32 * wram) {
+        storeWRam(wram);
+    }
+
+    // size: 0x4000
+    void get_vram(int32 * vram) {
+        storeVRam(vram);
+    }
+
+    void get_rom(int32 * rom) {
+        storeRom(rom);
+    }
+
+    void set_rom(int32 * new_rom) {
+        writeRom(new_rom);
+    }
+
+    void save_png(const char *path) {
+        gbWritePNGFile(path);
+    }
+
+    int get_cheat_count() {
+        return gbCheatNumber;
+    }
+
+    bool cheat_read_gameshark_file(const char *path) {
+        return gbCheatReadGSCodeFile(path);
+    }
+
+    void cheat_add_gameshark(const char *code, const char *description) {
+        gbAddGsCheat(code, description);
+    }
+
+    void cheat_add_gamegenie(const char *code, const char *description) {
+        gbAddGgCheat(code, description);
+    }
+
+    void cheat_enable(int id) {
+        gbCheatEnable(id);
+    }
+
+    void cheat_disable(int id) {
+        gbCheatDisable(id);
+    }
+
+    void cheat_remove(int id) {
+        gbCheatRemove(id);
+    }
+
+    void cheat_remove_all(void) {
+        gbCheatRemoveAll();
+    }
+
+    // TODO: Java_com_aurellem_gb_Gb_VBAMovieOpen
+    // TODO: Java_com_aurellem_gb_Gb_getPixels
+}
 
 /*
  * Class:     com_aurellem_gb_Gb
@@ -82,7 +239,6 @@ JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_ntick
   return tick();
 
 }
-
 
 /*
  * Class:     com_aurellem_gb_Gb
@@ -346,7 +502,82 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_nwritePNG
   gbWritePNGFile(_filename);
 }
 
-  
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    loadCheatsFromFile
+ * Signature: (Ljava/lang/String;)Z
+ */
+JNIEXPORT jboolean JNICALL Java_com_aurellem_gb_Gb_loadCheatsFromFile
+(JNIEnv *env, jclass clazz, jstring filename){
+    // bool gbCheatReadGSCodeFile(const char *fileName)
+    const char *_filename = env->GetStringUTFChars(filename, 0);
+    return gbCheatReadGSCodeFile(_filename);
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    cheatEnable
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_cheatEnable
+(JNIEnv *env, jclass clazz, jint id) {
+    gbCheatEnable(id);
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    cheatDisable
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_cheatDisable
+(JNIEnv *env, jclass clazz, jint id) {
+    gbCheatDisable(id);
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    cheatRemoveAll
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_cheatRemoveAll
+(JNIEnv *env, jclass clazz) {
+    gbCheatRemoveAll();
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    cheatRemove
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_cheatRemove
+(JNIEnv *env, jclass clazz, jint id) {
+    gbCheatRemove(id);
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    cheatAddGamegenie
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_cheatAddGamegenie
+(JNIEnv *env, jclass clazz, jstring code, jstring description) {
+    const char *_code = env->GetStringUTFChars(code, 0);
+    const char *_description = env->GetStringUTFChars(description, 0);
+    gbAddGgCheat(_code, _description);
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    cheatAddGameshark
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_cheatAddGameshark
+(JNIEnv *env, jclass clazz, jstring code, jstring description) {
+    const char *_code = env->GetStringUTFChars(code, 0);
+    const char *_description = env->GetStringUTFChars(description, 0);
+    gbAddGsCheat(_code, _description);
+}
+
 
 /*
  * Class:     com_aurellem_gb_Gb
@@ -448,3 +679,34 @@ JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_setROMBank
   memset(&gbDataMBC3.mapperROMBank, bank, 1 * sizeof(int32));
 }
 
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    getCurrentButtons
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_com_aurellem_gb_Gb_getCurrentButtons
+(JNIEnv *env, jclass clazz){
+  return currentButtons[0];
+}
+
+/*
+ * Class:     com_aurellem_gb_Gb
+ * Method:    showScreen
+ * Signature: (I)V
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_showScreen
+(JNIEnv *env, jclass clazz, jint status){
+  showScreen = status;
+}
+
+/*
+ * Class:       com_aurellem_gb_Gb
+ * Method:      VBAMovieOpen
+ * Signature:   (Ljava/lang/String;Z;)V
+ *
+ * VBAMovieOpen(const char *filename, bool8 read_only)
+ */
+JNIEXPORT void JNICALL Java_com_aurellem_gb_Gb_VBAMovieOpen(JNIEnv *env, jclass clazz, jstring filename, jboolean read_only) {
+    const char *_filename = env->GetStringUTFChars(filename, 0);
+    VBAMovieOpen(_filename, read_only);
+}

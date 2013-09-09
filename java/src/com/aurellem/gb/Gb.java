@@ -147,4 +147,17 @@ public class Gb {
 
     public static native void setROMBank(int bank);
 
+    public static native boolean loadCheatsFromFile(String filename);
+    public static native void cheatEnable(int id);
+    public static native void cheatDisable(int id);
+    public static native void cheatRemoveAll();
+    public static native void cheatRemove(int id);
+    public static native void cheatAddGamegenie(String code, String description);
+    public static native void cheatAddGameshark(String code, String description);
+
+    public static native int getCurrentButtons();
+
+    public static native void showScreen(int status);
+
+    public static native void VBAMovieOpen(String filename, boolean read_only);
 }
