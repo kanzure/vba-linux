@@ -26,6 +26,27 @@ make
 
 Build products are dumped into: ./src/clojure/.libs/
 
+## Using the java bindings
+
+Make sure vba-linux is available within "java.library.path":
+
+```
+sudo ln -s ./src/clojure/.libs/libvba.so.0.0.0 /usr/lib/jni/libvba.so
+```
+
+Make sure vba-linux bindings are in $CLASSPATH:
+
+```
+export CLASSPATH=$CLASSPATH:`pwd`/java/dist/gb-bindings.jar
+```
+
+To use the bindings from inside the jvm (like with java, clojure or jython):
+
+```
+import com.aurellem.gb.Gb as Gb
+Gb.loadVBA()
+```
+
 ## Which version of VBA is this?
 
 Who knows.
