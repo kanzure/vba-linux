@@ -21,6 +21,7 @@ export JAVA_INCLUDE_PATH2=$JAVA_INCLUDE_PATH
 Next do these things:
 
 ```
+./dl-libs.sh
 cd java/
 ant all
 cd ../
