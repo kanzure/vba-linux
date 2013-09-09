@@ -141,6 +141,9 @@ SDL_Surface *surface = NULL;
 SDL_Overlay *overlay = NULL;
 SDL_Rect overlay_rect;
 
+// kanzure: speed up emulation by not rendering
+int showScreen = 1;
+
 int systemSpeed = 0;
 int systemRedShift = 0;
 int systemBlueShift = 0;
@@ -1106,11 +1109,11 @@ void sdlReadPreferences(FILE *f)
       motion[KEY_DOWN] = sdlFromHex(value);
     } else if(!strcmp(key, "frameSkip")) {
       frameSkip = sdlFromHex(value);
-      if(frameSkip < 0 || frameSkip > 9)
+      if(frameSkip < 0) // || frameSkip > 9)
         frameSkip = 2;
     } else if(!strcmp(key, "gbFrameSkip")) {
       gbFrameSkip = sdlFromHex(value);
-      if(gbFrameSkip < 0 || gbFrameSkip > 9)
+      if(gbFrameSkip < 0) // || gbFrameSkip > 9)
         gbFrameSkip = 0;      
     } else if(!strcmp(key, "video")) {
       sizeOption = sdlFromHex(value);
@@ -2770,6 +2773,9 @@ void systemRenderFrame()
     Draw_Overlay(surface, sizeOption+1);
     return;
   }
+
+  if (!showScreen)
+      return;
   
   SDL_LockSurface(surface);
 
