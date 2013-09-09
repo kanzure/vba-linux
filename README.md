@@ -5,6 +5,12 @@ This is VBA for Linux except with rerecording capabilities and jvm bindings
 
 ## building
 
+Install the dependencies:
+
+```
+sudo apt-get install g++ libtool openjdk-6-jre openjdk-6-jdk libsdl1.2-dev ant autoconf
+```
+
 Configure some environment variables:
 
 ```
