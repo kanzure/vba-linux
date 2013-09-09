@@ -18,3 +18,21 @@ java/lib/*
 render/*
 zophar/*
 video/*
+
+# compiled objects
+*.o
+*.so
+*.lo
+*.la
+.deps
+.libs
+*.class
+*$py.class
+*.pyc
+
+# java archives
+*.jar
+
+# editor swap files
+.*.swp
+*~
